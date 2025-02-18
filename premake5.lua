@@ -10,15 +10,8 @@ workspace("Sengine")
   outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
   
   IncludeDir = {}
-  IncludeDir["BOX2D"] =     "/Source/ThirdParty/box2d/include"
-  IncludeDir["ENTT"] =      "/Source/ThirdParty/entt/include"
-  IncludeDir["FASTGLTF"] =  "/Source/ThirdParty/fastgltf/include"
-  IncludeDir["GLAD"] =      "/Source/ThirdParty/glad/include"
-  IncludeDir["GLM"] =       "/Source/ThirdParty/glm"
-  IncludeDir["IMGUI"] =     "/Source/ThirdParty/imgui"
-  IncludeDir["SOL2"] =      "/Source/ThirdParty/sol2/include"
-  IncludeDir["STBIMAGE"] =  "/Source/ThirdParty/stb_image"
-  IncludeDir["SWINDOW"] =   "/Source/ThirdParty/swindow"
+  IncludeDir["SENGINE"] =     "../Sengine/"
+  IncludeDir["THIRDPARTY"] =     "../ThirdParty/"
 
   group "Dependencies"
     include "Source/ThirdParty/box2d"
@@ -48,3 +41,4 @@ workspace("Sengine")
     symbols "off"
 
     include "Source/Sengine"
+    include "Source/Editor"

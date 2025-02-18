@@ -12,19 +12,14 @@ project "Sengine"
 
     files
     {
-        "src/**.h",
-        "src/**.cpp",
+        "Sengine/**.h",
+        "Sengine/**.cpp",
     }
 
     includedirs
     {
-        "src",
-        "../%{IncludeDir.GLAD}",
-        "../%{IncludeDir.glm}",
-		"../%{IncludeDir.stb_image}",
-		"../%{IncludeDir.imgui}",
-        "../%{IncludeDir.fastgltf}",
-        "../%{IncludeDir.swindow}",
+        "Sengine",
+        "%{IncludeDir.THIRDPARTY}",
     }
 
     links

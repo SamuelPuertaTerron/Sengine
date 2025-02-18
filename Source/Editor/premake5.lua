@@ -16,13 +16,8 @@ project "Sengine Editor"
 	includedirs
 	{
 		"src",
-        "../%{IncludeDir.GLAD}",
-        "../%{IncludeDir.glm}",
-		"../%{IncludeDir.stb_image}",
-		"../%{IncludeDir.imgui}",
-        "../%{IncludeDir.fastgltf}",
-		"../%{IncludeDir.swindow}",
-		"../%{IncludeDir.sol2}",
+		"%{IncludeDir.SENGINE}",
+        "%{IncludeDir.THIRDPARTY}",
 	}
 
 	links
