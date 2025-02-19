@@ -6,7 +6,7 @@ namespace Sengine
 	{
 		m_NativeWindow = Swindow::Window::Create(description);
 
-		m_NativeWindow->CreateContext();
+		m_NativeWindow->CreateContext(1, 0, true);
 
 		return std::make_shared<Window>();
 	}

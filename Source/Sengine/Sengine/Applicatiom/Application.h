@@ -17,7 +17,7 @@ namespace Sengine
 	private:
 		[[nodiscard]] bool Init();
 		void Tick();
-		void Destroy();
+		void Destroy() const;
 	private:
 		std::shared_ptr<ISengineApp> m_ClientApp;
 		std::shared_ptr<Window> m_Window;

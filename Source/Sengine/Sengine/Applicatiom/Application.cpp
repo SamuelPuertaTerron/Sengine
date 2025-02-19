@@ -45,7 +45,7 @@ namespace Sengine
 		}
 	}
 
-	void Application::Destroy()
+	void Application::Destroy() const
 	{
 		m_ClientApp->OnDestroy();
 

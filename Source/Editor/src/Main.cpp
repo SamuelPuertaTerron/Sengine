@@ -1,5 +1,6 @@
 
 #include "Sengine/Sengine.h"
+#include "Sengine/Render/Renderer.h"
 
 namespace SengineEditor
 {
@@ -42,6 +43,12 @@ namespace SengineEditor
 	{
 		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 		glClearColor(0.25f, 0.6f, 0.75f, 1.0f);
+
+		Renderer::BeginRender2D({});
+
+		Renderer::Draw2D();
+
+		Renderer::EndRender2D();
 	}
 	void Editor::OnDestroy()
 	{
