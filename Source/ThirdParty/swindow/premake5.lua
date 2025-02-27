@@ -10,6 +10,7 @@ project "SWINDOW"
     files
     {
         "Swindow.h",
+        "Main.cpp"
     }
 
     filter "configurations:Debug"

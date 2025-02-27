@@ -1,7 +1,13 @@
-﻿#pragma once
+﻿/*
+ * How Rendering works is through multiple Begin and End functions
+ */
+
+#pragma once
 
 namespace Sengine
 {
+	class IRenderContext;
+
 	struct Camera2D
 	{
 		
@@ -15,6 +21,10 @@ namespace Sengine
 	class Renderer
 	{
 	public:
+
+		[[nodiscard]] static bool Init(const ERenderContextType& contextType);
+		static void Destroy();
+
 		//2D Renderer
 
 		static void BeginRender2D(const Camera2D& camera);
@@ -23,8 +33,10 @@ namespace Sengine
 		static void Draw2D();
 
 		//3D Renderer
-
+ 
 		static void BeginRender3D(const Camera3D& camera);
 		static void EndRenderer();
+
+	private:
 	};
 }

@@ -1,4 +1,5 @@
-﻿#include "Window.h"
+﻿#include "Globals.h"
+#include "Window.h"
 
 namespace Sengine
 {
@@ -8,12 +9,14 @@ namespace Sengine
 
 		m_NativeWindow->CreateContext(1, 0, true);
 
+		Logger::Log("Created Window", ELogType::Info, ELogAreaType::Engine);
 		return std::make_shared<Window>();
 	}
 
 	void Window::Destroy() const
 	{
 		m_NativeWindow->Destroy();
+		Logger::Log("Destroyed Window", ELogType::Info, ELogAreaType::Engine);
 	}
 
 	bool Window::GetIsRunning() const

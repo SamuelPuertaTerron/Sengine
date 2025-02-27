@@ -1,4 +1,5 @@
-﻿#include "Renderer3D.h"
+﻿#include "Globals.h"
+#include "Renderer3D.h"
 
 namespace Sengine::Renderer3D
 {

@@ -1,11 +1,18 @@
 ﻿#pragma once
-#include <future>
-
+#include "Render/Context/RenderContextType.h"
 #include "swindow/Swindow.h"
 
 namespace Sengine
 {
-	struct WindowDescription : Swindow::WindowDescription {};
+	enum class ERenderContextType : uint8_t;
+}
+
+namespace Sengine
+{
+	struct WindowDescription : Swindow::WindowDescription
+	{
+		ERenderContextType RenderContextType = ERenderContextType::OpenGL;
+	};
 
 	class Window
 	{

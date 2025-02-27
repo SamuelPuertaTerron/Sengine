@@ -7,8 +7,8 @@ project "Sengine"
     targetdir ("../../bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("../../bin-int/" .. outputdir .. "/%{prj.name}")
 
-    --pchheader "frpch.h"
-    --pchsource "src/frpch.cpp"
+    pchheader "Globals.h"
+    pchsource "Sengine/Globals.cpp"
 
     files
     {

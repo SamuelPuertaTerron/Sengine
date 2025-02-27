@@ -11,12 +11,14 @@ namespace Sengine
 	class Application
 	{
 	public:
-
-		void CreateApplication(const std::shared_ptr<ISengineApp>& app);
+		/// <summary>
+		/// The entry point of the engine. Run's the given application from the parameter. 
+		/// </summary>
+		void RunApplication(const std::shared_ptr<ISengineApp>& app);
 
 	private:
 		[[nodiscard]] bool Init();
-		void Tick();
+		void Tick() const;
 		void Destroy() const;
 	private:
 		std::shared_ptr<ISengineApp> m_ClientApp;

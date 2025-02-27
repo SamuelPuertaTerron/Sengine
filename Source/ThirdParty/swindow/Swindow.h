@@ -502,7 +502,7 @@ namespace Swindow
 
 		window->m_IsRunning = true;
 
-		Internal::Logger::Log("Created Window");
+		//Internal::Logger::Log("Created Window");
 
 		return window; //Return the parent window
 	}
@@ -510,7 +510,7 @@ namespace Swindow
 	inline void Window::Destroy() const
 	{
 		m_NativeWindow->Destroy();
-		Internal::Logger::Log("Destroyed Window");
+		//Internal::Logger::Log("Destroyed Window");
 	}
 
 	inline bool Window::GetIsRunning() const
@@ -684,7 +684,7 @@ namespace Swindow
 			AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
 			//Create a temp title to avoid assertion
-			const auto title = m_Window->GetWindowDescription().Title;
+			const std::string title = m_Window->GetWindowDescription().Title;
 			const std::wstring wtitle(title.begin(), title.end());
 
 

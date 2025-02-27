@@ -1,16 +1,20 @@
-﻿#include "Application.h"
+﻿#include "Globals.h"
+#include "Application.h"
 
 #include "Window.h"
 
 namespace Sengine
 {
-	void Application::CreateApplication(const std::shared_ptr<ISengineApp>& app)
+	void Application::RunApplication(const std::shared_ptr<ISengineApp>& app)
 	{
 		m_ClientApp = app;
 
 		if (!Init()) return;
 
-		Tick();
+		while (m_Window->GetIsRunning())
+		{
+			Tick();
+		}
 
 		Destroy();
 	}
@@ -23,26 +27,25 @@ namespace Sengine
 
 		if (!m_Window->Create(m_ClientApp->GetWindowDescription())) return false;
 
+		if (!Renderer::Init(m_ClientApp->GetWindowDescription().RenderContextType)) return false;
+
 		if (!m_ClientApp->OnInit()) return false;
 
 		return true;
 	}
 
-	void Application::Tick()
+	void Application::Tick() const
 	{
-		while (m_Window->GetIsRunning())
+		m_Window->PollEvents();
+
+		if (m_Window->GetIsKeyDown(Swindow::KeyCode::Escape))
 		{
-			m_Window->PollEvents();
+			m_Window->SetIsRunning(false);
+		}	
 
-			if (m_Window->GetIsKeyDown(Swindow::KeyCode::Escape))
-			{
-				m_Window->SetIsRunning(false);
-			}	
+		m_ClientApp->OnTick();
 
-			m_ClientApp->OnTick();
-
-			m_Window->SwapBuffers();
-		}
+		m_Window->SwapBuffers();
 	}
 
 	void Application::Destroy() const

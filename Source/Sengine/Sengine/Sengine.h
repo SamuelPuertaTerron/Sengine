@@ -1,5 +1,7 @@
 #pragma once
 
-#include "Sengine/Applicatiom/ISengineApp.h"
-#include "Sengine/Applicatiom/Application.h"
-#include "Sengine/Applicatiom/Window.h"
+#include "Applicatiom/ISengineApp.h"
+#include "Applicatiom/Application.h"
+#include "Applicatiom/Window.h"
+
+#include "Render/Renderer.h"
