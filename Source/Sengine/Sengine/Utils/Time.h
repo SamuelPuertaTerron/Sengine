@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Time.h
+ *	Date Created: 27/02/25
+ *	Purpose: A cross platform time class for ease of access. 
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ ***/
+#pragma once
 
 namespace Sengine
 {

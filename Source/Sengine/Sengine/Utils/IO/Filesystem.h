@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Filesystem.h
+ *	Date Created: 26/02/25
+ *	Purpose: A simple wrapper around std::filesystem used to create and access files and directories. 
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ ***/
+#pragma once
 
 namespace Sengine
 {

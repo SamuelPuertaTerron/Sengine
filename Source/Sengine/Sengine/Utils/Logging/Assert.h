@@ -1,7 +1,12 @@
+/**
+ *	Filename: Assert.h
+ *	Date Created: 21/02/25
+ *	Purpose: Functionality to Assert and stop the program from currently running
+ *	Last Modified: 26/02/25
+ *	Changes:	   Changed the log file to use filesystem log file.
+ *				   Removed some redundant headers
+ ***/
 #pragma once
-
-#include <fstream>
-#include <cstdlib>
 
 namespace Sengine
 {

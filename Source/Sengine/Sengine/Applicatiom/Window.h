@@ -1,4 +1,13 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Window.h
+ *	Date Created: 21/02/25
+ *	Purpose: The main window which abstracts away Swindow functionality
+ *	Last Modified: 27/02/25
+ *	Changes:	Added the GetIsKeyDown function to allow for easy and quick input
+ *				Added Logging to both the create window and destroy window functions
+ ***/
+
+#pragma once
 #include "Render/Context/RenderContextType.h"
 #include "swindow/Swindow.h"
 

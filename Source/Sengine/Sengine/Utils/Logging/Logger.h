@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Logger.h
+ *	Date Created: 26/02/25
+ *	Purpose: Allows for logging to the screen and a log file 
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ *
+ ***/
+#pragma once
 
 #include "Utils/IO/Filesystem.h"
 

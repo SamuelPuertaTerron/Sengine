@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+ *	Filename: OpenGLRenderContext.h
+ *	Date Created: 21/02/25
+ *	Purpose: The OpenGL renderer
+ *	Last Modified: 25/02/25
+ *	Changes:	   Removed 2D render context and merged into a single file
+ *
+ ***/
+#pragma once
 
 #include "Render/Context/IRenderContext.h"
 

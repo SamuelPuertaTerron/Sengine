@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Editor.h
+ *	Date Created: 21/02/25
+ *	Purpose: The main sengine editor functionality
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ ***/
+#pragma once
 
 namespace SengineEditor
 {

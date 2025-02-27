@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/**
+ *	Filename: IRenderContext.h
+ *	Date Created: 21/02/25
+ *	Purpose: Abstracts away graphic API related code. Used as a base class
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ ***/
+#pragma once
 
 namespace Sengine
 {

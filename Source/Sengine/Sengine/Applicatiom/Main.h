@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Main.h
+ *	Date Created: 27/02/25
+ *	Purpose: The entry point for the Sengine engine.
+ *	Last Modified: N/A
+ *	Changes:	   N/A
+ ***/
+
+#pragma once
 #include "Application.h"
 
 Sengine::SengineAppPtr CreateApp();

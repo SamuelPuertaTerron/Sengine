@@ -1,3 +1,11 @@
+/**
+ *	Filename: ISengineApp.h
+ *	Date Created: 21/02/25
+ *	Purpose: The client app base class.
+ *	Last Modified: 27/02/25
+ *	Changes:	Added both the SengineAppPtr using statement and the MakeSengineAppPtr function to be used inside the Sengine app to abstract away std::shared_ptr code from the client app
+ ***/
+
 #pragma once
 
 namespace Sengine

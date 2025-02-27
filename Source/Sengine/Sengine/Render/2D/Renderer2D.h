@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+ *	Filename: Render2D.h
+ *	Date Created: 21/02/25
+ *	Purpose: Abstracts away 2D rendering code and used inside the main renderer
+ *	Last Modified: 27/02/25
+ *	Changes:	   Removed IRenderContext2D from this class and added IRenderContext instead.
+ *
+ ***/
+#pragma once
 
 namespace Sengine
 {

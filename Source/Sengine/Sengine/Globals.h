@@ -1,3 +1,10 @@
+/**
+ *	Filename: Globals.h
+ *	Date Created: 21/02/25
+ *	Purpose: A recompiled header to include all necessary include files
+ *	Last Modified: 27/02/25
+ *	Changes:	   Added Filesystem and Time includes
+ ***/
 #pragma once
 
 /* C++ standard library includes */
