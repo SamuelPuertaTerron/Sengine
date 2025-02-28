@@ -38,4 +38,19 @@ namespace Sengine
 	{
 		m_NativeWindow->SwapBuffers();
 	}
+
+	std::shared_ptr<Swindow::Window> Window::GetNativeWindow() const
+	{
+		SE_ASSERT(!m_NativeWindow, "Native window has not been created.");
+
+		return m_NativeWindow;
+	}
+	bool Window::GetIsKeyDown(Swindow::KeyCode code) const
+	{
+		return m_NativeWindow->GetIsKeyDown(code);
+	}
+	const char* GetProcAddress(const char* name)
+	{
+		return static_cast<const char*>(Application::GetInstance().GetWindow()->GetNativeWindow()->GetProcAddress(name));
+	}
 }

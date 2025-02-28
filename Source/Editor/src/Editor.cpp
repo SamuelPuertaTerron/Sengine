@@ -1,6 +1,9 @@
 ﻿#include "Sengine/Globals.h"
 #include "Editor.h"
 
+#include "Sengine/Platform/IPlatformContext.h"
+#include "Sengine/Render/Resources/Camera/Camera.h"
+
 namespace SengineEditor
 {
 	WindowDescription& Editor::GetWindowDescription()
@@ -21,11 +24,16 @@ namespace SengineEditor
 	}
 	void Editor::OnTick()
 	{
-		Renderer::BeginRender2D({});
+		Camera camera{};
+		Renderer::BeginRender(camera);
+
+		Renderer::BeginRender2D();
 
 		Renderer::Draw2D();
 
 		Renderer::EndRender2D();
+
+		Renderer::EndRender();
 	}
 	void Editor::OnDestroy()
 	{

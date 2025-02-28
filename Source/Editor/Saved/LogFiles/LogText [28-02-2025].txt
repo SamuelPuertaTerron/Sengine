@@ -1,0 +1,33 @@
+28-02-2025 11:48:54 [INFO] [Engine] Created Window
+28-02-2025 11:48:54 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:50:46 [INFO] [Engine] Created Window
+28-02-2025 11:50:46 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:51:19 [INFO] [Engine] Created Window
+28-02-2025 11:51:19 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:51:36 [INFO] [Engine] Created Window
+28-02-2025 11:51:36 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:52:11 [INFO] [Engine] Created Window
+28-02-2025 11:52:11 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:53:15 [INFO] [Engine] Created Window
+28-02-2025 11:53:15 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:53:16 [INFO] [Engine] Destroyed Window
+28-02-2025 11:53:23 [INFO] [Engine] Created Window
+28-02-2025 11:53:23 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 11:53:27 [INFO] [Engine] Destroyed Window
+28-02-2025 11:53:44 [INFO] [Engine] Created Window
+28-02-2025 11:53:44 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:30:01 [INFO] [Engine] Created Window
+28-02-2025 12:30:01 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:30:04 [INFO] [Engine] Destroyed Window
+28-02-2025 12:31:38 [INFO] [Engine] Created Window
+28-02-2025 12:31:38 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:36:35 [INFO] [Engine] Created Window
+28-02-2025 12:36:35 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:36:49 [INFO] [Engine] Created Window
+28-02-2025 12:36:49 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:38:41 [INFO] [Engine] Created Window
+28-02-2025 12:38:41 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:38:49 [INFO] [Engine] Destroyed Window
+28-02-2025 12:39:12 [INFO] [Engine] Created Window
+28-02-2025 12:39:12 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:39:12 [INFO] [Engine] Destroyed Window

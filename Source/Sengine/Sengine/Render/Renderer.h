@@ -10,17 +10,8 @@
 
 namespace Sengine
 {
+	class Camera;
 	class IRenderContext;
-
-	struct Camera2D
-	{
-		
-	};
-
-	struct Camera3D
-	{
-		
-	};
 
 	class Renderer
 	{
@@ -29,18 +20,23 @@ namespace Sengine
 		[[nodiscard]] static bool Init(const ERenderContextType& contextType);
 		static void Destroy();
 
+		//Render
+		static void BeginRender(const Camera& camera);
+		static void EndRender();
+
 		//2D Renderer
 
-		static void BeginRender2D(const Camera2D& camera);
+		static void BeginRender2D();
 		static void EndRender2D();
 
 		static void Draw2D();
 
 		//3D Renderer
  
-		static void BeginRender3D(const Camera3D& camera);
+		static void BeginRender3D();
 		static void EndRenderer();
 
 	private:
+		inline static std::shared_ptr<IRenderContext> m_RenderContext;
 	};
 }

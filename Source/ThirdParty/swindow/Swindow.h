@@ -15,8 +15,10 @@
 #ifdef _WIN32
 #include <Windows.h>
  //Include for OpenGL; including context creation.
+#ifdef SW_OPENGL_IMPLEMENTATION
 #include <GL/GL.h>
 #pragma comment (lib, "opengl32.lib")
+#endif
 #endif
 
 #ifdef __LINUX__
@@ -220,7 +222,7 @@ namespace Swindow
 		 *
 		 * @return A pointer to the requested function.
 		 */
-		char* GetProcAddress(const char* name) const;
+		void* GetProcAddress(const char* name) const;
 
 		/**
 		 * @brief Sets the callback function for window resizing.
@@ -364,7 +366,7 @@ namespace Swindow
 		public:
 			Error(const std::string& message) : runtime_error(message) {}
 		};
-
+#ifdef SW_OPENGL_IMPLEMENTATION
 		class RenderContext
 		{
 		public:
@@ -400,7 +402,7 @@ namespace Swindow
 			 */
 			static void DrawQuad(float x, float y, float scale = 1.0f, Colour colour = {});
 		};
-
+#endif	
 		class NativeWindow
 		{
 		public:
@@ -533,9 +535,9 @@ namespace Swindow
 		m_NativeWindow->PollEvents();
 	}
 
-	inline char* Window::GetProcAddress(const char* name) const
+	inline void* Window::GetProcAddress(const char* name) const
 	{
-		return static_cast<char*>(m_NativeWindow->GetExternalAddress(name));
+		return m_NativeWindow->GetExternalAddress(name);
 	}
 
 	inline void Window::SetWindowResizeCallback(WindowResizeCallback callback)
@@ -602,6 +604,8 @@ namespace Swindow
 
 #pragma region Render
 
+#ifdef SW_OPENGL_IMPLEMENTATION
+
 		inline void RenderContext::SetViewportSize(int width, int height)
 		{
 			glViewport(0, 0, width, height);
@@ -643,7 +647,7 @@ namespace Swindow
 			// Disable blending if it's not needed for other objects
 			glDisable(GL_BLEND);
 		}
-
+#endif
 
 #pragma endregion
 

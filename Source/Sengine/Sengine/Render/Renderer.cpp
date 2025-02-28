@@ -9,21 +9,33 @@ namespace Sengine
 {
 	bool Renderer::Init(const ERenderContextType& contextType)
 	{
-		auto context = IRenderContext::Create(contextType);
+		m_RenderContext = IRenderContext::Create(contextType);
 
-		if (!context->Init()) return false;
+		if (!m_RenderContext->Init()) return false;
 
-		Renderer2D::Renderer2D::Init(context);
+		Renderer2D::Renderer2D::Init(m_RenderContext);
 
 		return true;
 	}
 
 	void Renderer::Destroy()
 	{
-
+		Renderer2D::Renderer2D::Destroy();
 	}
 
-	void Renderer::BeginRender2D(const Camera2D& camera)
+	void Renderer::BeginRender(const Camera& camera)
+	{
+		//Update camera matrix
+
+		m_RenderContext->BeginRender();
+	}
+
+	void Renderer::EndRender()
+	{
+		m_RenderContext->EndRender();
+	}
+
+	void Renderer::BeginRender2D()
 	{
 		Renderer2D::Renderer2D::BeginRender();
 	}
@@ -38,7 +50,7 @@ namespace Sengine
 
 	}
 	 
-	void Renderer::BeginRender3D(const Camera3D& camera)
+	void Renderer::BeginRender3D()
 	{
 		
 	}

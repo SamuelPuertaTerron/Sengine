@@ -16,7 +16,7 @@ namespace Sengine
 		case ERenderContextType::Vulkan:
 		case ERenderContextType::None:
 			break;
-		}
+		}  
 
 		return nullptr;
 	}

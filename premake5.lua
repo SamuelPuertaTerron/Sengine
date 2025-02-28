@@ -12,6 +12,7 @@ workspace("Sengine")
   IncludeDir = {}
   IncludeDir["SENGINE"] =     "../Sengine/"
   IncludeDir["THIRDPARTY"] =     "../ThirdParty/"
+  IncludeDir["GLAD"] =     "../ThirdParty/glad/include"
 
   group "Dependencies"
     include "Source/ThirdParty/box2d"

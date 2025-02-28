@@ -2,8 +2,8 @@
  *	Filename: IRenderContext.h
  *	Date Created: 21/02/25
  *	Purpose: Abstracts away graphic API related code. Used as a base class
- *	Last Modified: N/A
- *	Changes:	   N/A
+ *	Last Modified: 28/02/25
+ *	Changes:	   Added begin and End render functions
  ***/
 #pragma once
 
@@ -18,6 +18,9 @@ namespace Sengine
 
 		[[nodiscard]] virtual bool Init() = 0;
 		virtual void Destroy() = 0;
+
+		virtual void BeginRender() = 0;
+		virtual void EndRender() = 0;
 
 		virtual void BeginRender2D() = 0;
 		virtual void EndRender2D() = 0;

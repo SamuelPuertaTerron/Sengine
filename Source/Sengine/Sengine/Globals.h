@@ -36,5 +36,7 @@
 #include "Utils/IO/Filesystem.h"
 #include "Utils/Time.h"
 
+#include "Platform/Platform.h"
+
 /* Sengine Generic Includes */
 #include "Sengine.h"

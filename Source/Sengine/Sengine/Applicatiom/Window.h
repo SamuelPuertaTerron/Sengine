@@ -9,7 +9,12 @@
 
 #pragma once
 #include "Render/Context/RenderContextType.h"
+#define SE_OPENGL_IMPLEMENTATION
+#ifdef SE_OPENGL_IMPLEMENTATION
+#define SW_OPENGL_IMPLEMENTATION
+#include "glad/include/glad/glad.h"
 #include "swindow/Swindow.h"
+#endif
 
 namespace Sengine
 {
@@ -38,9 +43,13 @@ namespace Sengine
 		void PollEvents() const;
 		void SwapBuffers() const;
 
-		[[nodiscard]] bool GetIsKeyDown(Swindow::KeyCode code) const { return m_NativeWindow->GetIsKeyDown(code); }
+		[[nodiscard]] std::shared_ptr<Swindow::Window> GetNativeWindow() const;
+
+		[[nodiscard]] bool GetIsKeyDown(Swindow::KeyCode code) const; //{ return m_NativeWindow->GetIsKeyDown(code); }
 	private:
 		std::shared_ptr<Swindow::Window> m_NativeWindow;
 	};
+
+	const char* GetProcAddress(const char* name);
 }
 
