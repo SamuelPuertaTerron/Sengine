@@ -31,3 +31,6 @@
 28-02-2025 12:39:12 [INFO] [Engine] Created Window
 28-02-2025 12:39:12 [INFO] [Renderer] Created OpenGL Renderer
 28-02-2025 12:39:12 [INFO] [Engine] Destroyed Window
+28-02-2025 12:42:53 [INFO] [Engine] Created Window
+28-02-2025 12:42:53 [INFO] [Renderer] Created OpenGL Renderer
+28-02-2025 12:43:00 [INFO] [Engine] Destroyed Window
