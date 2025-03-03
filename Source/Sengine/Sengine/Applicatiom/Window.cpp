@@ -3,6 +3,7 @@
 
 namespace Sengine
 {
+	
 	std::shared_ptr<Window> Window::Create(const WindowDescription& description)
 	{
 		m_NativeWindow = Swindow::Window::Create(description);
@@ -29,6 +30,16 @@ namespace Sengine
 		m_NativeWindow->SetIsRunning(value);
 	}
 
+	void Window::SetFullscreen() const
+	{
+		m_NativeWindow->SetFullscreen();
+	}
+
+	void Window::SetKeyCallback(const Swindow::WindowKeyCallback& callback) const
+	{
+		m_NativeWindow->SetWindowKeyCallback(callback);
+	}
+
 	void Window::PollEvents() const
 	{
 		m_NativeWindow->PollEvents();
@@ -52,5 +63,20 @@ namespace Sengine
 	const char* GetProcAddress(const char* name)
 	{
 		return static_cast<const char*>(Application::GetInstance().GetWindow()->GetNativeWindow()->GetProcAddress(name));
+	}
+
+	void IsKeyPressed(Swindow::KeyCode code, bool isPressed)
+	{
+		if (isPressed)
+		{
+			if (code == Swindow::KeyCode::F11)
+			{
+				Application::GetInstance().GetWindow()->SetFullscreen();
+			}
+			if (code == Swindow::KeyCode::Escape)
+			{
+				Application::GetInstance().GetWindow()->SetIsRunning(false);
+			}
+		}
 	}
 }

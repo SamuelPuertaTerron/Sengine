@@ -2,9 +2,6 @@
  *	Filename: IPlatformContext.h
  *	Date Created: 27/02/25
  *	Purpose: Abstracts Platform specific functions like dialogs and message boxes
- *	Last Modified: 28/02/25
- *	Changes:	   Renamed to IPlatformContext as an interface
- *
  ***/
 
 #pragma once

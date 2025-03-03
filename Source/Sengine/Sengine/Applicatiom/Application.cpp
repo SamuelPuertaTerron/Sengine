@@ -1,6 +1,7 @@
 ﻿#include "Globals.h"
 #include "Application.h"
 
+#include "InputManager.h"
 #include "Window.h"
 
 namespace Sengine
@@ -57,6 +58,8 @@ namespace Sengine
 
 		if (!Renderer::Init(m_ClientApp->GetWindowDescription().RenderContextType)) return false;
 
+		if (!InputManager::Init()) return false;
+
 		if (!Platform::Init()) return false;
 
 		if (!m_ClientApp->OnInit()) return false;
@@ -67,12 +70,6 @@ namespace Sengine
 	void Application::Tick() const
 	{
 		m_Window->PollEvents();
-
-		//TODO: Make Input System using Event driven programming
-		if (m_Window->GetIsKeyDown(Swindow::KeyCode::Escape))
-		{
-			m_Window->SetIsRunning(false);
-		}	
 
 		m_ClientApp->OnTick();
 

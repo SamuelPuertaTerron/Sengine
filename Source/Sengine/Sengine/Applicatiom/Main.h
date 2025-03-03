@@ -2,8 +2,6 @@
  *	Filename: Main.h
  *	Date Created: 27/02/25
  *	Purpose: The entry point for the Sengine engine.
- *	Last Modified: 28/02/25
- *	Changes:	   Modified the SengineMain function to use the singleton Application class
  ***/
 
 #pragma once

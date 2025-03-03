@@ -2,9 +2,6 @@
  *	Filename: PlatformWindowsContext.h
  *	Date Created: 28/02/25
  *	Purpose: The class for the windows platform specific functionality
- *	Last Modified: N/A
- *	Changes:	   N/A
- *
  ***/
 
 #pragma once

@@ -2,10 +2,6 @@
  *	Filename: Window.h
  *	Date Created: 21/02/25
  *	Purpose: The main window which abstracts away Swindow functionality
- *	Last Modified: 28/02/25
- *	Changes:	Added the GetIsKeyDown function to allow for easy and quick input
- *				Added Logging to both the create window and destroy window functions
- *				Added SE_OPENGL_IMPLEMENTATION and Glad loading before Swindow to prevent OpenGL issues
  ***/
 
 #pragma once
@@ -16,6 +12,11 @@
 #include "glad/include/glad/glad.h"
 #include "swindow/Swindow.h"
 #endif
+
+namespace Sengine
+{
+	enum class KeyCode : uint8_t;
+}
 
 namespace Sengine
 {
@@ -41,16 +42,22 @@ namespace Sengine
 		[[nodiscard]] bool GetIsRunning() const;
 		void SetIsRunning(bool value) const;
 
+		void SetFullscreen() const;
+
+		void SetKeyCallback(const Swindow::WindowKeyCallback& callback) const;
+
 		void PollEvents() const;
 		void SwapBuffers() const;
 
 		[[nodiscard]] std::shared_ptr<Swindow::Window> GetNativeWindow() const;
 
-		[[nodiscard]] bool GetIsKeyDown(Swindow::KeyCode code) const; //{ return m_NativeWindow->GetIsKeyDown(code); }
+		[[nodiscard]] bool GetIsKeyDown(Swindow::KeyCode code) const;
 	private:
 		std::shared_ptr<Swindow::Window> m_NativeWindow;
 	};
 
 	const char* GetProcAddress(const char* name);
+
+	void IsKeyPressed(Swindow::KeyCode code, bool isPressed);
 }
 

@@ -2,8 +2,6 @@
  *	Filename: Platform.h
  *	Date Created: 28/02/25
  *	Purpose: A static class to retrieve Platform specific functionality
- *	Last Modified: N/A
- *	Changes:	   N/A
  ***/
 
 #pragma once

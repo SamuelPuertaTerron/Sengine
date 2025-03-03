@@ -1,0 +1,6 @@
+01-03-2025 13:32:43 [INFO] [Engine] Created Window
+01-03-2025 13:32:43 [INFO] [Renderer] Created OpenGL Renderer
+01-03-2025 13:32:47 [INFO] [Engine] Destroyed Window
+01-03-2025 15:01:52 [INFO] [Engine] Created Window
+01-03-2025 15:01:52 [INFO] [Renderer] Created OpenGL Renderer
+01-03-2025 15:01:54 [INFO] [Engine] Destroyed Window

@@ -280,6 +280,12 @@ namespace Swindow
 		 * @param height The new height of the window.
 		 */
 		void SetWindowSize(int width, int height);
+		/**
+		 * @brief Sets the window to fullscreen mode or back to previous state.
+		 *
+		 * This function sets the window to fullscreen or back to where the window was last located, with the correct size
+		 */
+		void SetFullscreen() const;
 
 		/**
 		* @brief Is the key held down.
@@ -417,6 +423,8 @@ namespace Swindow
 			virtual KeyCode ConvertNativeKeyCodes(int key) { return KeyCode::Unknown; }
 			virtual int GetNativeKeyCodes(KeyCode code) { return -1; }
 
+			virtual void SetFullscreen() {}
+
 			virtual void CreateContext(int major = 4, int minor = 6, bool legacy = false) {}
 			virtual void* GetExternalAddress(const char* name) { return nullptr; }
 
@@ -445,6 +453,8 @@ namespace Swindow
 			virtual KeyCode ConvertNativeKeyCodes(int key) override;
 			virtual int GetNativeKeyCodes(KeyCode code) override;
 
+			virtual void SetFullscreen() override;
+
 			virtual void CreateContext(int major = 4, int minor = 6, bool legacy = false) override;
 
 			virtual void* GetExternalAddress(const char* name) override;
@@ -455,6 +465,7 @@ namespace Swindow
 			static void RegisterWindowClass(HINSTANCE hInstance);
 		private:
 			HWND m_WindowHandle;
+			WINDOWPLACEMENT m_WindowPlacement;
 			HDC m_DeviceContext;
 			HINSTANCE m_Instance;
 			HGLRC m_OpenGLContext;
@@ -576,6 +587,11 @@ namespace Swindow
 		m_WindowDescription.Height = height;
 	}
 
+	inline void Window::SetFullscreen() const
+	{
+		m_NativeWindow->SetFullscreen();
+	}
+
 	inline bool Window::GetIsKeyDown(KeyCode code)
 	{
 		return m_NativeWindow->IsKeyDown(code);
@@ -660,20 +676,19 @@ namespace Swindow
 
 		// These values come from the OpenGL and WGL extension specifications
 
-#define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
-#define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
-#define WGL_CONTEXT_LAYER_PLANE_ARB   0x2093
-#define WGL_CONTEXT_FLAGS_ARB         0x2094
-#define WGL_CONTEXT_PROFILE_MASK_ARB  0x9126
-
-// Values for WGL_CONTEXT_FLAGS_ARB
-#define WGL_CONTEXT_DEBUG_BIT_ARB              0x0001
-#define WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
-
-// Values for WGL_CONTEXT_PROFILE_MASK_ARB
-#define WGL_CONTEXT_CORE_PROFILE_BIT_ARB		  0x0001
-#define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x0002
-
+		constexpr auto WGL_CONTEXT_MAJOR_VERSION_ARB = 0x2091;
+		constexpr auto WGL_CONTEXT_MINOR_VERSION_ARB = 0x2092;
+		constexpr auto WGL_CONTEXT_LAYER_PLANE_ARB = 0x2093;
+		constexpr auto WGL_CONTEXT_FLAGS_ARB = 0x2094;
+		constexpr auto WGL_CONTEXT_PROFILE_MASK_ARB = 0x9126;
+		
+		// Values for WGL_CONTEXT_FLAGS_ARB
+		constexpr auto WGL_CONTEXT_DEBUG_BIT_ARB = 0x0001;
+		constexpr auto WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB = 0x0002;
+		
+		// Values for WGL_CONTEXT_PROFILE_MASK_ARB
+		constexpr auto WGL_CONTEXT_CORE_PROFILE_BIT_ARB = 0x0001;
+		constexpr auto WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x0002;
 
 		inline Win32NativeWindow::Win32NativeWindow(const WindowPtr& window)
 		{
@@ -713,6 +728,8 @@ namespace Swindow
 
 			//Pass the window pointer to the WindowProc function
 			SetWindowLongPtr(m_WindowHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+			m_WindowPlacement.length = sizeof(WINDOWPLACEMENT);
 
 			m_DeviceContext = GetDC(m_WindowHandle);
 
@@ -809,6 +826,38 @@ namespace Swindow
 
 			auto it = keyMap.find(code);
 			return (it != keyMap.end()) ? it->second : -1;
+		}
+
+		inline void Win32NativeWindow::SetFullscreen()
+		{
+			const DWORD dwStyle = GetWindowLong(m_WindowHandle, GWL_STYLE);
+
+			if (dwStyle & WS_OVERLAPPEDWINDOW)
+			{
+				MONITORINFO monitorInfo = { sizeof(monitorInfo) };
+				if (GetWindowPlacement(m_WindowHandle, &m_WindowPlacement) &&
+					GetMonitorInfo(MonitorFromWindow(m_WindowHandle, MONITOR_DEFAULTTOPRIMARY), &monitorInfo))
+				{
+					SetWindowLong(m_WindowHandle, GWL_STYLE, static_cast<LONG>(dwStyle) & ~WS_OVERLAPPEDWINDOW);
+
+					SetWindowPos(m_WindowHandle, HWND_TOP,
+						monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
+						monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
+						monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top,
+						SWP_NOOWNERZORDER | SWP_FRAMECHANGED | SWP_NOZORDER);
+
+					ShowWindow(m_WindowHandle, SW_MAXIMIZE);
+				}
+			}
+			else
+			{
+				SetWindowLong(m_WindowHandle, GWL_STYLE, static_cast<LONG>(dwStyle) | WS_OVERLAPPEDWINDOW);
+				SetWindowPlacement(m_WindowHandle, &m_WindowPlacement);
+				SetWindowPos(m_WindowHandle, nullptr, 0, 0, 0, 0, 
+					SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+
+				ShowWindow(m_WindowHandle, SW_RESTORE);
+			}
 		}
 
 		inline void Win32NativeWindow::CreateContext(int major, int minor, bool legacy)

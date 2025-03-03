@@ -2,9 +2,6 @@
  *	Filename: Globals.h
  *	Date Created: 21/02/25
  *	Purpose: A recompiled header to include all necessary include files
- *	Last Modified: 28/02/25
- *	Changes:	   Added Filesystem and Time includes
- *				   Added Platform include
  ***/
 #pragma once
 
