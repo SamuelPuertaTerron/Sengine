@@ -14,7 +14,7 @@ namespace Sengine
         errno_t t = localtime_s(&tm, &time);
         if (t != 0)
         {
-            return "0:0:0"; //Returns this if failed
+            return "0:0:0";
         }
 #endif
 #ifdef SE_PLATFORM_LINUX
@@ -37,7 +37,7 @@ namespace Sengine
         errno_t t = localtime_s(&tm, &time);
         if (t != 0)
         {
-            return "0:0:0"; //Returns this if failed
+            return "0:0:0";
         }
 #endif
 #ifdef SE_PLATFORM_LINUX

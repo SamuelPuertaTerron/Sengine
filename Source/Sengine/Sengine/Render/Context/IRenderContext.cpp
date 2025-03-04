@@ -6,12 +6,12 @@
 
 namespace Sengine
 {
-	std::shared_ptr<IRenderContext> IRenderContext::Create(const ERenderContextType& contextType)
+	SharedPtr<IRenderContext> IRenderContext::Create(const ERenderContextType& contextType)
 	{
 		switch (contextType)
 		{
 		case ERenderContextType::OpenGL:
-			return std::make_shared<RendererGL::OpenGLRenderContext>();
+			return CreateSharedPtr<RendererGL::OpenGLRenderContext>();
 		case ERenderContextType::DX11:
 		case ERenderContextType::Vulkan:
 		case ERenderContextType::None:

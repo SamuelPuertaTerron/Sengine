@@ -21,6 +21,7 @@ workspace("Sengine")
 	  include "Source/ThirdParty/glad"
     include "Source/ThirdParty/glm"
     include "Source/ThirdParty/ImGui"
+    include "Source/ThirdParty/nlohmann"
 	  include "Source/ThirdParty/sol2"
     include "Source/ThirdParty/stb_image"
     include "Source/ThirdParty/swindow"

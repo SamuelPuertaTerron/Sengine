@@ -7,13 +7,13 @@
 #pragma once
 #include "Application.h"
 
-Sengine::SengineAppPtr CreateApp();
+Sengine::SharedPtr<Sengine::ISengineApp> CreateApp();
 
 namespace Sengine
 {
 	static int SengineMain()
 	{
-		auto app = CreateApp();
+		SharedPtr<ISengineApp> app = CreateApp();
 		SE_ASSERT(!app, "Could not create Application. Have you called CreateApp function inside the client app?");
 		Application::GetInstance().RunApplication(app);
 		return 0;
@@ -24,7 +24,7 @@ namespace Sengine
 
 #ifdef SE_RELEASE
 	#ifdef SE_PLATFORM_WINDOWS
-		inline int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
+		int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 		{
 			return Sengine::SengineMain();
 		}
@@ -32,7 +32,7 @@ namespace Sengine
 #endif
 
 #ifdef SE_DEBUG
-inline int main()
+int main()
 {
 	return Sengine::SengineMain();
 }

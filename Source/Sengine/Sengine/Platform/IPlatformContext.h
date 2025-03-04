@@ -24,7 +24,7 @@ namespace Sengine
 		virtual bool ShowMessageBox(const std::string& text, const std::string& title, EMessageBoxType type) = 0;
 		virtual void OpenProcess(const std::string& command) = 0;
 
-		static std::unique_ptr<IPlatformContext> Create();
+		static UniquePtr<IPlatformContext> Create();
 
 	};
 }

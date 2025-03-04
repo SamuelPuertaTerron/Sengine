@@ -15,16 +15,6 @@
 
 namespace Sengine
 {
-	enum class KeyCode : uint8_t;
-}
-
-namespace Sengine
-{
-	enum class ERenderContextType : uint8_t;
-}
-
-namespace Sengine
-{
 	struct WindowDescription : Swindow::WindowDescription
 	{
 		ERenderContextType RenderContextType = ERenderContextType::OpenGL;
@@ -36,7 +26,7 @@ namespace Sengine
 		Window() = default;
 		~Window() = default;
 
-		[[nodiscard]] std::shared_ptr<Window> Create(const WindowDescription& description);
+		[[nodiscard]] SharedPtr<Window> Create(const WindowDescription& description);
 		void Destroy() const;
 
 		[[nodiscard]] bool GetIsRunning() const;
@@ -49,11 +39,11 @@ namespace Sengine
 		void PollEvents() const;
 		void SwapBuffers() const;
 
-		[[nodiscard]] std::shared_ptr<Swindow::Window> GetNativeWindow() const;
+		[[nodiscard]] SharedPtr<Swindow::Window> GetNativeWindow() const;
 
 		[[nodiscard]] bool GetIsKeyDown(Swindow::KeyCode code) const;
 	private:
-		std::shared_ptr<Swindow::Window> m_NativeWindow;
+		SharedPtr<Swindow::Window> m_NativeWindow;
 	};
 
 	const char* GetProcAddress(const char* name);

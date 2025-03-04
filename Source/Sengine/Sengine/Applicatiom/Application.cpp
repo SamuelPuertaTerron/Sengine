@@ -16,7 +16,7 @@ namespace Sengine
 		return *s_Instance;
 	}
 
-	void Application::RunApplication(const std::shared_ptr<ISengineApp>& app)
+	void Application::RunApplication(const SharedPtr<ISengineApp>& app)
 	{
 		m_ClientApp = app;
 
@@ -34,14 +34,14 @@ namespace Sengine
 		Destroy();
 	}
 
-	std::shared_ptr<ISengineApp> Application::GetClientApp() const
+	SharedPtr<ISengineApp> Application::GetClientApp() const
 	{
 		SE_ASSERT(!m_ClientApp, "Client App is null. Don't call the GetClientApp function until the client app has been created");
 
 		return m_ClientApp;
 	}
 
-	std::shared_ptr<Window> Application::GetWindow() const
+	SharedPtr<Window> Application::GetWindow() const
 	{
 		SE_ASSERT(!m_Window, "Window is null. Don't call the GetWindow function until the window has been created");
 
@@ -52,7 +52,7 @@ namespace Sengine
 	{
 		if (!m_ClientApp->OnEarlyInit()) return false;
 
-		m_Window = std::make_shared<Window>();
+		m_Window = CreateSharedPtr<Window>();
 
 		if (!m_Window->Create(m_ClientApp->GetWindowDescription())) return false;
 

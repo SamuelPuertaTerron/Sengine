@@ -15,7 +15,7 @@ namespace Sengine::Renderer2D
 	class Renderer2D
 	{
 	public:
-		static bool Init(const std::shared_ptr<IRenderContext>& context);
+		static bool Init(const SharedPtr<IRenderContext>& context);
 		static void Destroy();
 		 
 		static void BeginRender();
@@ -30,7 +30,7 @@ namespace Sengine::Renderer2D
 		//Will error if a Draw function is called and either a Begin/End function has not been found. 
 		inline static int m_CurrentRenderIndex = 0;
 
-		inline static std::shared_ptr<IRenderContext> m_RenderContext;
+		inline static SharedPtr<IRenderContext> m_RenderContext;
 	};
 }//namespace Sengine::Renderer2D
 

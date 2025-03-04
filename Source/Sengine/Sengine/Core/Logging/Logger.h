@@ -4,8 +4,7 @@
  *	Purpose: Allows for logging to the screen and a log file 
  ***/
 #pragma once
-
-#include "Utils/IO/Filesystem.h"
+#include "Core/IO/Filesystem.h"
 
 namespace Sengine
 {

@@ -30,9 +30,15 @@
 
 /* Core Sengine includes */
 
-#include "Utils/Log.h"
-#include "Utils/IO/Filesystem.h"
-#include "Utils/Time.h"
+#include "Core/Types.h"
+
+#include "Core/Logging/Assert.h"
+#include "Core/Logging/Logger.h"
+
+#include "Core/IO/Filesystem.h"
+#include "Core/IO/JsonSerialization.h"
+
+#include "Core/Time.h"
 
 #include "Platform/Platform.h"
 

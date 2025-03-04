@@ -1,0 +1,11 @@
+{
+    "Action 0": {
+        "Code": 59,
+        "Name": "Set Fullscreen"
+    },
+    "Action 1": {
+        "Code": 37,
+        "Name": "Quit"
+    },
+    "Action Map Name": "Engine Action Map"
+}

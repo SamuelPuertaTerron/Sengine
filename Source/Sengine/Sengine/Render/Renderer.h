@@ -35,6 +35,6 @@ namespace Sengine
 		static void EndRenderer();
 
 	private:
-		inline static std::shared_ptr<IRenderContext> m_RenderContext;
+		inline static SharedPtr<IRenderContext> m_RenderContext;
 	};
 }

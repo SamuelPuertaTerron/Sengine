@@ -11,7 +11,7 @@ namespace Sengine
 		m_NativeWindow->CreateContext(1, 0, true);
 
 		Logger::Log("Created Window", ELogType::Info, ELogAreaType::Engine);
-		return std::make_shared<Window>();
+		return CreateSharedPtr<Window>();
 	}
 
 	void Window::Destroy() const
@@ -50,7 +50,7 @@ namespace Sengine
 		m_NativeWindow->SwapBuffers();
 	}
 
-	std::shared_ptr<Swindow::Window> Window::GetNativeWindow() const
+	SharedPtr<Swindow::Window> Window::GetNativeWindow() const
 	{
 		SE_ASSERT(!m_NativeWindow, "Native window has not been created.");
 
@@ -63,20 +63,5 @@ namespace Sengine
 	const char* GetProcAddress(const char* name)
 	{
 		return static_cast<const char*>(Application::GetInstance().GetWindow()->GetNativeWindow()->GetProcAddress(name));
-	}
-
-	void IsKeyPressed(Swindow::KeyCode code, bool isPressed)
-	{
-		if (isPressed)
-		{
-			if (code == Swindow::KeyCode::F11)
-			{
-				Application::GetInstance().GetWindow()->SetFullscreen();
-			}
-			if (code == Swindow::KeyCode::Escape)
-			{
-				Application::GetInstance().GetWindow()->SetIsRunning(false);
-			}
-		}
 	}
 }

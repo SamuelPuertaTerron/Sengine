@@ -9,7 +9,9 @@
 
 namespace Sengine
 {
-	using KeyCallback = std::function<void()>;
+	using AnyInputCode = std::any;
+
+	using KeyDelegate = std::function<void()>;
 
 	struct KeyStates
 	{
@@ -21,7 +23,7 @@ namespace Sengine
 	template<typename T>
 	struct TAction
 	{
-		KeyCallback Callback;
+		KeyDelegate Callback;
 		T Code;
 	};
 
@@ -31,7 +33,7 @@ namespace Sengine
 	struct ActionMap
 	{
 		std::string Name;
-		std::unordered_map<std::string, TAction<std::any>> ActionList;
+		std::unordered_map<std::string, TAction<AnyInputCode>> ActionList;
 
 		bool operator==(const ActionMap& other) const;
 	};
@@ -42,13 +44,22 @@ namespace Sengine
 		static bool Init();
 		static void Destroy();
 
-		static bool IsKeyPressed(KeyCode code);
-		static bool IsKeyDown(KeyCode code);
+		static void SaveEngineActionMap(const fs::path& path);
+		static void LoadEngineActionMap(const fs::path& path);
+
+		static bool IsKeyPressed(EKeyCode code);
+		static bool IsKeyDown(EKeyCode code);
+
+		static ActionMap CreateActionMap(const std::string& name);
+		static void CreateActionMapping(ActionMap& map, const std::string& actionName, const AnyInputCode& code, const KeyDelegate& callback);
+
+		static void Tick();
 
 	private:
 		static void KeyCallback(Swindow::KeyCode code, bool isPressed);
-		static KeyCode ConvertToSengineKeyCode(Swindow::KeyCode code);
+		static EKeyCode ConvertToSengineKeyCode(Swindow::KeyCode code);
 	private:
-		inline static std::unordered_map<KeyCode, KeyStates> m_KeyStates;
+		inline static std::unordered_map<EKeyCode, KeyStates> s_KeyStates;
+		inline static std::vector<ActionMap> s_ActionMaps;
 	};
 }

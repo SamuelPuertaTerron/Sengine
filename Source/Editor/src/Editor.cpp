@@ -6,6 +6,7 @@
 
 namespace SengineEditor
 {
+
 	WindowDescription& Editor::GetWindowDescription()
 	{
 		return m_WindowDescription;
@@ -24,6 +25,17 @@ namespace SengineEditor
 	}
 	void Editor::OnTick()
 	{
+		if (InputManager::IsKeyPressed(EKeyCode::F2))
+		{
+			InputManager::SaveEngineActionMap("Saved/Engine/Input.json");
+		}
+
+		if (InputManager::IsKeyPressed(EKeyCode::F3))
+		{
+			Serializer::DeserializeObject("Saved/Test.json", m_PlayerSerializer);
+			Logger::Log("Loaded Json File");
+		}
+
 		Camera camera{};
 		Renderer::BeginRender(camera);
 
@@ -40,5 +52,15 @@ namespace SengineEditor
 	}
 	void Editor::OnLateDestroy()
 	{
+	}
+
+	void PlayerSerializer::SerializeData(Json& out)
+	{
+		out["Name"] = m_Player.Name;
+	}
+
+	void PlayerSerializer::DeserializeData(Json& in)
+	{
+		Logger::Log("Json File Loaded: " + in.dump(), ELogType::Debug, ELogAreaType::Generic);
 	}
 }

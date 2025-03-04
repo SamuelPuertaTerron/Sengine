@@ -1,0 +1,2 @@
+03-03-2025 18:37:25 [INFO] [Engine] Created Window
+03-03-2025 18:37:25 [INFO] [Renderer] Created OpenGL Renderer

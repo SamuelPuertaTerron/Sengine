@@ -43,14 +43,4 @@ namespace Sengine
 		/// </summary>
 		virtual void OnLateDestroy() = 0;
 	};
-
-	//Generic Wrapper function to be used inside the client app for a nicer API
-
-	using SengineAppPtr = std::shared_ptr<ISengineApp>;
-
-	template<typename T>
-	SengineAppPtr MakeSengineAppPtr()
-	{
-		return std::make_shared<T>();
-	}
 }
