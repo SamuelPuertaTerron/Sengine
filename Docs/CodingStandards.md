@@ -159,7 +159,7 @@ Abstract classes must be prefix with I as `ISengineApp`
 
 ### Pointers
 
-Use `SharedPtr` or a `UniquePtr` type over raw pointers. They are Sengine wrappers around smart pointers. 
+Use smart pointers type over raw pointers.
 
 ## Strings
 
