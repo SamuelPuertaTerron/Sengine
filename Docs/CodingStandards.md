@@ -152,7 +152,7 @@ Abstract classes must be prefix with I as `ISengineApp`
 
     #include "entt/entt.hpp"
 
-    class 
+    class player;
 ```
 
 ## Additional Notes
