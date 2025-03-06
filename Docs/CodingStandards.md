@@ -4,7 +4,7 @@
 
 * **Write Readable Code**
     
-    The code should be easy to understand
+    The code should be easy to understand and self documenting to an extent
 
 * **Keep It Simple**
 
@@ -33,11 +33,17 @@
 
 Variables that use float must written as `m_Foo = 10.0f` instead of `m_Foo = 10`
 
-Variables that use a pointer must be prefix with a **p** as `m_pApplicationInstance`
+Variables that use a **raw** pointer must be prefix with a **p** as `m_pApplicationInstance`
 
-Template classes or structs must be prefix with Template
+Template classes or structs must be prefix with Template as `class TObject`
 
-Abstract classes must be prefix with I as `ISengineApp`
+Abstract classes must be prefix with I as `class ISengineApp`
+
+## Struct & Classes
+
+**Structs** should only be used to act as data containers and should not contain any functions, **except** from operation overloads. 
+
+**Classes** can contain both data and functions, if a class just contains data, consider changing to a struct. 
 
 ## Formatting and Style
 
@@ -113,12 +119,11 @@ Abstract classes must be prefix with I as `ISengineApp`
         float m_PlayerHealth = 10;
 
     public:
-        void Tick()
-        {
+        void Tick() {
             if(m_PlayerHealth > 0) Move();
             else GameOver();
         }
-    }
+    };
 
     
 ```
@@ -127,7 +132,7 @@ Abstract classes must be prefix with I as `ISengineApp`
 
 * Use `#pragma once` at the top of all `.h` files
 * Use forward declarations where possible
-* Sort includes in order:
+* Sort includes in order of:
     
     1. Standard library headers using `#include <>`
 
@@ -135,16 +140,17 @@ Abstract classes must be prefix with I as `ISengineApp`
 
     3. Project-specific headers using `#include ""`
 
-* Avoid unnecessary includes in headers
+* Avoid unnecessary includes in headers and prefer forward declaration
+* For project specific headers use the full path, from the root as `Sengine\Application\Application.h` rather than `Application.h`
 * Use a comment at the top of each file to explain what the file is. 
 
 ### Example
 
 ```cpp
     /**
-     *	Filename: Application.h
+     *	Filename: App.h
      *	Date Created: 21/02/25
-     *	Purpose: The main application class, handles the functionality from int main() to when the application is closed. 
+     *	Purpose: The Client App class
      ***/
     #pragma once
 
@@ -152,14 +158,16 @@ Abstract classes must be prefix with I as `ISengineApp`
 
     #include "entt/entt.hpp"
 
-    class player;
+    #include "Sengine/Application/ISengineApp.h"
+
+    class Player;
 ```
 
 ## Additional Notes
 
 ### Pointers
 
-Use smart pointers type over raw pointers.
+Use smart pointers over raw pointers.
 
 ## Strings
 
@@ -205,6 +213,54 @@ If `try-catch` is used, log using Sengine built in logger
     	const std::string errorMessage = e.what();
     	Logger::Log("Cannot Deserialize Json file " +  errorMessage, ELogType::Error, ELogAreaType::Engine);
     }
+```
+
+## Namespaces
+
+* Namespaces should use C++17 syntax
+* Do not include `using namespace` in any file, especially `using namespcae std`    
+* Comment the end of the namespace 
+
+### Correct
+
+```cpp
+    namespace Foo::Bar
+    {
+
+    }// namespace Foo::Bar
+```
+### Incorrect
+```cpp
+    namespace Foo
+    {
+        namespace Bar
+        {
+
+        }
+    }
+```
+
+* Namespaces can be used in the old syle as shown
+
+This is becuase the ERenderContextType is used in multiple places, but ideally, we don't want the g_ERenderContextType enum to be accessible in those places. 
+
+```cpp
+namespace Sengine
+{
+	enum class ERenderContextType : uint8_t
+	{
+		None = 0,
+		OpenGL,
+		DX11,
+		Vulkan,
+	};
+
+	namespace Render
+	{
+		// The graphics API type. changed in the app settings default is OpenGL.  
+		inline ERenderContextType g_ERenderConTextType = ERenderContextType::OpenGL;
+	}//namespace Render
+}//namespace Sengine
 ```
 
 ## General Guidance
@@ -256,3 +312,34 @@ void Foo()
 * Prefer C++ cast over C-style cast. 
 
 * Try to avoid using types with new names for convienience. 
+
+* Prefer using `inline static` over adding in the type in the `.cpp` file. 
+
+### Correct
+
+```cpp
+    class Foo
+    {
+        ...
+
+    private:
+        inline static Foo* m_Instance = nullptr;
+    };
+```
+### Incorrect
+```cpp
+
+    //Foo.h
+
+    class Foo
+    {
+        ...
+
+    private:
+        static Foo* m_Instance;
+    };
+
+    //Foo.cpp
+
+    Foo* Foo::m_Instance = nullptr;
+```
