@@ -1,7 +1,6 @@
 ﻿#include "Sengine/Globals.h"
 #include "Editor.h"
 
-#include "Sengine/Platform/IPlatformContext.h"
 #include "Sengine/Render/Resources/Camera/Camera.h"
 
 namespace SengineEditor
@@ -32,8 +31,7 @@ namespace SengineEditor
 
 		if (InputManager::IsKeyPressed(EKeyCode::F3))
 		{
-			Serializer::DeserializeObject("Saved/Test.json", m_PlayerSerializer);
-			Logger::Log("Loaded Json File");
+			InputManager::LoadEngineActionMap("Saved/Engine/Input.json");
 		}
 
 		Camera camera{};
@@ -54,12 +52,12 @@ namespace SengineEditor
 	{
 	}
 
-	void PlayerSerializer::SerializeData(Json& out)
+	void PlayerSerializer::SerializeData(nlohmann::json& out)
 	{
 		out["Name"] = m_Player.Name;
 	}
 
-	void PlayerSerializer::DeserializeData(Json& in)
+	void PlayerSerializer::DeserializeData(nlohmann::json& in)
 	{
 		Logger::Log("Json File Loaded: " + in.dump(), ELogType::Debug, ELogAreaType::Generic);
 	}

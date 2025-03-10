@@ -10,8 +10,8 @@ namespace Sengine
 
 		virtual ~InputManagerSerialization() override = default;
 
-		virtual void SerializeData(Json& out) override;
-		virtual void DeserializeData(Json& in) override;
+		virtual void SerializeData(nlohmann::json& out) override;
+		virtual void DeserializeData(nlohmann::json& in) override;
 
 	private:
 		ActionMap m_ActionMap;

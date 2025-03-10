@@ -10,10 +10,7 @@
 namespace Sengine
 {
 	class Window;
-}
 
-namespace Sengine
-{
 	class Application
 	{
 	public:
@@ -25,12 +22,12 @@ namespace Sengine
 		/// <summary>
 		/// The entry point of the engine. Run's the given application from the parameter. 
 		/// </summary>
-		void RunApplication(const SharedPtr<ISengineApp>& app);
+		void RunApplication(const std::shared_ptr<ISengineApp>& app);
 
 		//Getter Functions
 
-		[[nodiscard]] SharedPtr<ISengineApp> GetClientApp() const;
-		[[nodiscard]] SharedPtr<Window> GetWindow() const;
+		[[nodiscard]] std::shared_ptr<ISengineApp> GetClientApp() const;
+		[[nodiscard]] std::shared_ptr<Window> GetWindow() const;
 
 	private:
 		Application() = default;
@@ -42,8 +39,8 @@ namespace Sengine
 	private:
 		inline static Application* s_Instance;
 
-		SharedPtr<ISengineApp> m_ClientApp;
-		SharedPtr<Window> m_Window;
+		std::shared_ptr<ISengineApp> m_ClientApp;
+		std::shared_ptr<Window> m_Window;
 	};
 }
 

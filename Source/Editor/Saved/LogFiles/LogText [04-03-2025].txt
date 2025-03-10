@@ -1940,3 +1940,24 @@
 04-03-2025 13:20:05 [INFO] [Renderer] Created OpenGL Renderer
 04-03-2025 13:21:00 [INFO] [Engine] Created Window
 04-03-2025 13:21:00 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:52:03 [INFO] [Engine] Created Window
+04-03-2025 19:52:03 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:52:55 [INFO] [Engine] Created Window
+04-03-2025 19:52:55 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:55:30 [INFO] [Engine] Created Window
+04-03-2025 19:55:30 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:58:02 [INFO] [Engine] Created Window
+04-03-2025 19:58:02 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:58:04 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be number, but is null
+04-03-2025 19:58:04 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be number, but is null
+04-03-2025 19:58:04 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be number, but is null
+04-03-2025 19:59:23 [INFO] [Engine] Created Window
+04-03-2025 19:59:23 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 19:59:54 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be string, but is null
+04-03-2025 20:00:03 [INFO] [Engine] Created Window
+04-03-2025 20:00:03 [INFO] [Renderer] Created OpenGL Renderer
+04-03-2025 20:00:05 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be string, but is null
+04-03-2025 20:00:05 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be string, but is null
+04-03-2025 20:00:05 [ERROR] [Engine] Cannot Deserialize Json file [json.exception.type_error.302] type must be string, but is null
+04-03-2025 20:01:29 [INFO] [Engine] Created Window
+04-03-2025 20:01:29 [INFO] [Renderer] Created OpenGL Renderer

@@ -167,7 +167,7 @@ Abstract classes must be prefix with I as `class ISengineApp`
 
 ### Pointers
 
-Use smart pointers over raw pointers.
+Use Sengine's TSharedPtr and TUniqePtr over raw pointers. 
 
 ## Strings
 

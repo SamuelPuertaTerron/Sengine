@@ -5,10 +5,10 @@
 
 namespace Sengine
 {
-	UniquePtr<IPlatformContext> IPlatformContext::Create()
+	std::unique_ptr<IPlatformContext> IPlatformContext::Create()
 	{
 #ifdef SE_PLATFORM_WINDOWS
-		return CreateUniquePtr<Windows::PlatformWindowsContext>();
+		return std::make_unique<Windows::PlatformWindowsContext>();
 #endif//Se_PLATFORM_WINDOWS
 	}
 }//namespace Sengine

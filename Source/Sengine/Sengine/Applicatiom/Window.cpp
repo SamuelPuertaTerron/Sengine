@@ -11,7 +11,7 @@ namespace Sengine
 		m_NativeWindow->CreateContext(1, 0, true);
 
 		Logger::Log("Created Window", ELogType::Info, ELogAreaType::Engine);
-		return CreateSharedPtr<Window>();
+		return std::make_shared<Window>();
 	}
 
 	void Window::Destroy() const
@@ -50,7 +50,7 @@ namespace Sengine
 		m_NativeWindow->SwapBuffers();
 	}
 
-	SharedPtr<Swindow::Window> Window::GetNativeWindow() const
+	std::shared_ptr<Swindow::Window> Window::GetNativeWindow() const
 	{
 		SE_ASSERT(!m_NativeWindow, "Native window has not been created.");
 

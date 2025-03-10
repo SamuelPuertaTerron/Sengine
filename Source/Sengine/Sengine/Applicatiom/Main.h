@@ -7,13 +7,13 @@
 #pragma once
 #include "Application.h"
 
-Sengine::SharedPtr<Sengine::ISengineApp> CreateApp();
+std::shared_ptr<Sengine::ISengineApp> CreateApp();
 
 namespace Sengine
 {
 	static int SengineMain()
 	{
-		SharedPtr<ISengineApp> app = CreateApp();
+		std::shared_ptr<ISengineApp> app = CreateApp();
 		SE_ASSERT(!app, "Could not create Application. Have you called CreateApp function inside the client app?");
 		Application::GetInstance().RunApplication(app);
 		return 0;

@@ -40,7 +40,7 @@
 
 #include "Core/Time.h"
 
-#include "Platform/Platform.h"
+#include "Core/Platform/Platform.h"
 
 /* Sengine Generic Includes */
 #include "Sengine.h"

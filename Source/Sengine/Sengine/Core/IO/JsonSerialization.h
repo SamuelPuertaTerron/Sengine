@@ -9,15 +9,13 @@
 
 namespace Sengine
 {
-	using Json = nlohmann::json;
-
 	class ISerializable
 	{
 	public:
 		virtual ~ISerializable() = default;
 
-		virtual void SerializeData(Json& out) = 0;
-		virtual void DeserializeData(Json& in) = 0;
+		virtual void SerializeData(nlohmann::json& out) = 0;
+		virtual void DeserializeData(nlohmann::json& in) = 0;
 	};
 
 	class Serializer

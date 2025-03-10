@@ -5,7 +5,7 @@
 
 namespace Sengine::Renderer2D
 {
-	bool Renderer2D::Init(const SharedPtr<IRenderContext>& context)
+	bool Renderer2D::Init(const std::shared_ptr<IRenderContext>& context)
 	{
 		m_RenderContext = context;
 

@@ -22,6 +22,6 @@ namespace Sengine
 		static void OpenProcess(const std::string& command);
 
 	private:
-		inline static UniquePtr<IPlatformContext> m_PlatformContext;
+		inline static std::unique_ptr<IPlatformContext> m_PlatformContext;
 	};
 }//namespace Sengine

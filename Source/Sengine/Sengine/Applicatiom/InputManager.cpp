@@ -5,7 +5,7 @@
 
 namespace Sengine
 {
-	inline static InputManagerSerialization m_InputSerialization = { {} };
+	inline static InputManagerSerialization s_InputSerialization = { {} };
 
 	bool ActionMap::operator==(const ActionMap& other) const
 	{
@@ -20,7 +20,7 @@ namespace Sengine
 		CreateActionMapping(engine, "Set Fullscreen", EKeyCode::F11, nullptr);
 		CreateActionMapping(engine, "Quit", EKeyCode::Escape, nullptr);
 
-		m_InputSerialization = InputManagerSerialization(engine);
+		s_InputSerialization = InputManagerSerialization(engine);
 
 		return true;
 	}
@@ -30,12 +30,12 @@ namespace Sengine
 
 	void InputManager::SaveEngineActionMap(const fs::path& path)
 	{
-		Serializer::SerializeObject(path, m_InputSerialization);
+		Serializer::SerializeObject(path, s_InputSerialization);
 	}
 
 	void InputManager::LoadEngineActionMap(const fs::path& path)
 	{
-
+		Serializer::DeserializeObject(path, s_InputSerialization);
 	}
 
 	bool InputManager::IsKeyPressed(EKeyCode code)
@@ -72,7 +72,7 @@ namespace Sengine
 			{
 				if (action.Code.type() == typeid(EKeyCode))
 				{
-					
+					Logger::Log("Pressed Key " + actionName);
 				}
 			}
 		}

@@ -5,7 +5,7 @@
  ***/
 
 #pragma once
-#include "Platform/IPlatformContext.h"
+#include "Core/Platform/IPlatformContext.h"
 
 namespace Sengine::Windows
 {

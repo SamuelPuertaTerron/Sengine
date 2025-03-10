@@ -3,7 +3,7 @@
 
 namespace Sengine
 {
-	void InputManagerSerialization::SerializeData(Json& out)
+	void InputManagerSerialization::SerializeData(nlohmann::json& out)
 	{
 		out["Action Map Name"] = m_ActionMap.Name;
 
@@ -24,10 +24,27 @@ namespace Sengine
 			out["Action " + std::to_string(index)]["Code"] = actionCode;
 			index++;
 		}
+
+		out["Action Index"] = index;
 	}
 
-	void InputManagerSerialization::DeserializeData(Json& in)
+	void InputManagerSerialization::DeserializeData(nlohmann::json& in)
 	{
+		m_ActionMap = {};
 
+		m_ActionMap.Name = in["Action Map Name"];
+
+		int index = in["Action Index"].get<int>();
+
+		for (int i = 0; i < index; i++)
+		{
+			std::string actionName = EmptyString;
+			std::any code = {};
+
+			actionName = in["Action " + std::to_string(i)]["Name"].get<std::string>();
+			code = static_cast<EKeyCode>(in["Action " + std::to_string(i)]["Code"].get<int>());
+
+			InputManager::CreateActionMapping(m_ActionMap, actionName, code, nullptr);
+		}
 	}
 }

@@ -62,16 +62,6 @@ namespace Sengine
 		return EmptyString;
 	}
 
-	std::ifstream& Filesystem::ReadFileStream(const fs::path& path)
-	{
-		std::ifstream inputFile(path);
-
-		const std::string msg = "Failed to load file at path " + path.string();
-		SE_ASSERT(!inputFile.is_open(), msg.c_str());
-
-		return inputFile;
-	}
-
 	void Filesystem::AppendToFile(File& file, const std::string& contents)
 	{
 		if (!FileExist(file))

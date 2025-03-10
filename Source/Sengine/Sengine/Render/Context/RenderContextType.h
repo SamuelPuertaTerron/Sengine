@@ -19,5 +19,5 @@ namespace Sengine
 	{
 		// The graphics API type. changed in the app settings default is OpenGL.  
 		inline ERenderContextType g_ERenderConTextType = ERenderContextType::OpenGL;
-	}
-}
+	}//namespace Render
+}//namespace Sengine

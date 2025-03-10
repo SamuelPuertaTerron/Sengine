@@ -9,7 +9,7 @@
 
 #include "Editor.h"
 
-inline Sengine::SharedPtr<Sengine::ISengineApp> CreateApp()
+inline std::shared_ptr<Sengine::ISengineApp> CreateApp()
 {
-	return Sengine::CreateSharedPtr<SengineEditor::Editor>();
+	return std::make_shared<SengineEditor::Editor>();
 }

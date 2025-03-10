@@ -23,6 +23,6 @@ namespace Sengine
 		virtual void BeginRender2D() = 0;
 		virtual void EndRender2D() = 0;
 
-		static SharedPtr<IRenderContext> Create(const ERenderContextType& contextType);
+		static std::shared_ptr<IRenderContext> Create(const ERenderContextType& contextType);
 	};
 }

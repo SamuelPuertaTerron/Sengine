@@ -48,7 +48,6 @@ namespace Sengine
 		static File WriteFileToDirectory(const Directory& directory, const std::string& filename, const std::string& contents);
 		static std::string ReadFileContents(const File& file);
 		static std::string ReadFileContents(const fs::path& path);
-		static std::ifstream& ReadFileStream(const fs::path& path);
 		static void AppendToFile(File& file, const std::string& contents);
 		static File AppendToFile(const fs::path& path, const std::string& contents);
 		static bool FileExist(const File& file);
