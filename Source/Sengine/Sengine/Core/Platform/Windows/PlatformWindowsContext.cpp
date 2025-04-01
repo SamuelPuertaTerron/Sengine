@@ -1,7 +1,9 @@
 ﻿#include "Globals.h"
 #include "PlatformWindowsContext.h"
 
-namespace Sengine::Windows
+#include <Windows.h>
+
+namespace Sengine::Win32
 {
 	bool PlatformWindowsContext::ShowMessageBox(const std::string& text, const std::string& title, EMessageBoxType type)
 	{

@@ -7,7 +7,7 @@
 #pragma once
 #include "Core/Platform/IPlatformContext.h"
 
-namespace Sengine::Windows
+namespace Sengine::Win32
 {
 	class PlatformWindowsContext : public IPlatformContext
 	{

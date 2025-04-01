@@ -30,7 +30,8 @@ namespace Sengine
 	enum class EMouseButton : uint8_t
 	{
 		Unknown = 0,
-		LeftMouseButton,
-		RightMouseButton,
+		Left,
+		Right,
+		Middle,
 	};
 }

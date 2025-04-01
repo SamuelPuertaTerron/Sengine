@@ -29,7 +29,6 @@ project "Sengine"
         "GLM",
         "IMGUI",
         "FASTGLTF",
-        "SWINDOW",
     }
 
     filter "system:windows"

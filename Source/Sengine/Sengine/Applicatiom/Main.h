@@ -18,7 +18,7 @@ namespace Sengine
 		Application::GetInstance().RunApplication(app);
 		return 0;
 	}
-}
+}//namespace Sengine
 
 //Entry Point
 
@@ -28,12 +28,12 @@ namespace Sengine
 		{
 			return Sengine::SengineMain();
 		}
-	#endif	
-#endif
+	#endif//SE_PLATFORM_WINDOWS	
+#endif//SE_RELEASE
 
 #ifdef SE_DEBUG
 int main()
 {
 	return Sengine::SengineMain();
 }
-#endif	
+#endif//SE_DEBUG

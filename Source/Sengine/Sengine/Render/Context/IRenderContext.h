@@ -23,6 +23,8 @@ namespace Sengine
 		virtual void BeginRender2D() = 0;
 		virtual void EndRender2D() = 0;
 
+		virtual void DrawQuad(Vector2 position, Vector2 rotation, Vector2 scale) = 0;
+
 		static std::shared_ptr<IRenderContext> Create(const ERenderContextType& contextType);
 	};
 }

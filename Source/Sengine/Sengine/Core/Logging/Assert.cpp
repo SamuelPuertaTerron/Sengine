@@ -8,7 +8,7 @@ namespace Sengine
 		if (condition)
 		{
 			std::stringstream ss;
-			ss << condition << " at file " << file << " at line " <<  line << "\n" << "Message: " << message << "\n";
+			ss << condition << " at file " << file << " at line " <<  line << " Message: " << message << "\n";
 			Logger::Log(ss.str(), ELogType::Fatal, ELogAreaType::Assert);
 			std::abort();
 		}

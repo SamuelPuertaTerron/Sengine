@@ -15,6 +15,8 @@ namespace Sengine
 		case ERenderContextType::DX11:
 		case ERenderContextType::Vulkan:
 		case ERenderContextType::None:
+			SE_ASSERT(Application::GetInstance().GetWindowDescription().RenderContextType != ERenderContextType::OpenGL,
+				"The current Graphics API supported is OpenGL");
 			break;
 		}  
 

@@ -9,6 +9,7 @@
  ***/
 #pragma once
 
+#include "Render/RenderViewport.h"
 #include "Render/Context/IRenderContext.h"
 
 namespace Sengine::RendererGL
@@ -27,7 +28,10 @@ namespace Sengine::RendererGL
 
 		virtual void BeginRender2D() override;
 		virtual void EndRender2D() override;
+
+		virtual void DrawQuad(Vector2 position, Vector2 rotation, Vector2 scale) override;
+
+	private:
+		Render::RenderViewport m_Viewport;
 	};
-}
-
-
+}//namespace Sengine::RendererGL

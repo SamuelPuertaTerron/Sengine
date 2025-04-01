@@ -43,4 +43,4 @@ namespace Sengine
 		/// </summary>
 		virtual void OnLateDestroy() = 0;
 	};
-}
+}//namespace Sengine

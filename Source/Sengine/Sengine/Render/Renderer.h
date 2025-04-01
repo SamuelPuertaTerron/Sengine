@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "RenderViewport.h"
+
 namespace Sengine
 {
 	class Camera;
@@ -34,7 +36,13 @@ namespace Sengine
 		static void BeginRender3D();
 		static void EndRenderer();
 
+		// Utility
+
+		static void SetViewportSize(Vector2Int size);
+		[[nodiscard]] static Render::RenderViewport GetRenderViewport();
+
 	private:
 		inline static std::shared_ptr<IRenderContext> m_RenderContext;
+		inline static Render::RenderViewport m_Viewport;
 	};
-}
+}//namespace Sengine

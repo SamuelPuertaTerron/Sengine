@@ -24,7 +24,6 @@ workspace("Sengine")
     include "Source/ThirdParty/nlohmann"
 	  include "Source/ThirdParty/sol2"
     include "Source/ThirdParty/stb_image"
-    include "Source/ThirdParty/swindow"
   group ""
   
   group "Engine"

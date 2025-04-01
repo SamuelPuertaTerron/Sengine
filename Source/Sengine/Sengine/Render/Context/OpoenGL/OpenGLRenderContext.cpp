@@ -1,6 +1,9 @@
 ﻿#include "Globals.h"
 #include "OpenGLRenderContext.h"
 
+#include "GLAD/include/glad/glad.h"
+#include "Render/Renderer.h"
+
 namespace Sengine::RendererGL
 {
 	bool OpenGLRenderContext::Init()
@@ -8,13 +11,16 @@ namespace Sengine::RendererGL
 		Logger::Log("Created OpenGL Renderer", ELogType::Info, ELogAreaType::Renderer);
 
 		auto window = Application::GetInstance().GetWindow();
-		window->GetNativeWindow()->CreateContext();//use the default options, OpenGL  version 4.6. 
+		window->GetNativeWindow()->CreateGraphicsContext();//use the default options, OpenGL  version 4.6. 
 
 		if (!gladLoadGLLoader((GLADloadproc)GetProcAddress))
 		{
 			Logger::Log("Failed to load OpenGL functions", ELogType::Error, ELogAreaType::Renderer);
 			return false;
 		}
+
+		m_Viewport = Renderer::GetRenderViewport();
+		glViewport(m_Viewport.Offset.X, m_Viewport.Offset.Y, m_Viewport.Size.X, m_Viewport.Size.Y);
 
 		return true;
 	}
@@ -43,5 +49,10 @@ namespace Sengine::RendererGL
 	void OpenGLRenderContext::EndRender2D()
 	{
 
+	}
+
+	void OpenGLRenderContext::DrawQuad(Vector2 position, Vector2 rotation, Vector2 scale)
+	{
+		
 	}
 }

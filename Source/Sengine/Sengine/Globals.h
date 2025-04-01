@@ -28,6 +28,10 @@
 #include <map>
 #include <chrono>
 
+#ifdef SE_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif //SE_PLATFORM_WINDOWS
+
 /* Core Sengine includes */
 
 #include "Core/Types.h"
@@ -42,5 +46,10 @@
 
 #include "Core/Platform/Platform.h"
 
+#include "Core/Math/Math.h"
+
 /* Sengine Generic Includes */
-#include "Sengine.h"
+
+#include "Applicatiom/Application.h"
+#include "Applicatiom/ApplicationState.h"
+#include "Applicatiom/Window/Window.h"

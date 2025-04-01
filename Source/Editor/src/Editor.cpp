@@ -1,6 +1,7 @@
 ﻿#include "Sengine/Globals.h"
 #include "Editor.h"
 
+#include "Sengine/Render/Renderer.h"
 #include "Sengine/Render/Resources/Camera/Camera.h"
 
 namespace SengineEditor
@@ -13,8 +14,8 @@ namespace SengineEditor
 	bool Editor::OnEarlyInit()
 	{
 		m_WindowDescription.Title = "Editor";
-		m_WindowDescription.Width = 1270;
-		m_WindowDescription.Height = 720;
+		m_WindowDescription.Size = { 1270, 720 };
+		m_WindowDescription.RenderContextType = ERenderContextType::OpenGL;
 
 		return true;
 	}
@@ -24,16 +25,6 @@ namespace SengineEditor
 	}
 	void Editor::OnTick()
 	{
-		if (InputManager::IsKeyPressed(EKeyCode::F2))
-		{
-			InputManager::SaveEngineActionMap("Saved/Engine/Input.json");
-		}
-
-		if (InputManager::IsKeyPressed(EKeyCode::F3))
-		{
-			InputManager::LoadEngineActionMap("Saved/Engine/Input.json");
-		}
-
 		Camera camera{};
 		Renderer::BeginRender(camera);
 

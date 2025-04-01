@@ -1,16 +1,29 @@
 ﻿#include "Globals.h"
 #include "Window.h"
 
+#include "Render/Renderer.h"
+
 namespace Sengine
 {
 	
 	std::shared_ptr<Window> Window::Create(const WindowDescription& description)
 	{
-		m_NativeWindow = Swindow::Window::Create(description);
-
-		m_NativeWindow->CreateContext(1, 0, true);
+		m_NativeWindow = Windows::INativeWindow::CreateNativeWindow();
+		if (!m_NativeWindow->Init(description))
+		{
+			return nullptr;
+		}
 
 		Logger::Log("Created Window", ELogType::Info, ELogAreaType::Engine);
+
+
+		SetWindowSize(description.Size);
+
+		WindowResizeCallback = [&](Vector2Int size)
+			{
+				SetWindowResizeCallback(size);
+			};
+
 		return std::make_shared<Window>();
 	}
 
@@ -20,24 +33,9 @@ namespace Sengine
 		Logger::Log("Destroyed Window", ELogType::Info, ELogAreaType::Engine);
 	}
 
-	bool Window::GetIsRunning() const
-	{
-		return m_NativeWindow->GetIsRunning();
-	}
-
-	void Window::SetIsRunning(bool value) const
-	{
-		m_NativeWindow->SetIsRunning(value);
-	}
-
 	void Window::SetFullscreen() const
 	{
-		m_NativeWindow->SetFullscreen();
-	}
-
-	void Window::SetKeyCallback(const Swindow::WindowKeyCallback& callback) const
-	{
-		m_NativeWindow->SetWindowKeyCallback(callback);
+		//m_NativeWindow->SetFullscreen();
 	}
 
 	void Window::PollEvents() const
@@ -50,16 +48,26 @@ namespace Sengine
 		m_NativeWindow->SwapBuffers();
 	}
 
-	std::shared_ptr<Swindow::Window> Window::GetNativeWindow() const
+	std::shared_ptr<Windows::INativeWindow> Window::GetNativeWindow() const
 	{
 		SE_ASSERT(!m_NativeWindow, "Native window has not been created.");
 
 		return m_NativeWindow;
 	}
-	bool Window::GetIsKeyDown(Swindow::KeyCode code) const
+
+	void Window::SetWindowSize(Vector2Int size)
 	{
-		return m_NativeWindow->GetIsKeyDown(code);
+		m_WindowSize = size;
+		Renderer::SetViewportSize(size);
+
+		Logger::Log("Set Window Size to: " + m_WindowSize.ToString(), ELogType::Info, ELogAreaType::Engine);
 	}
+
+	void Window::SetWindowResizeCallback(Vector2Int size)
+	{
+		SetWindowSize(size);
+	}
+
 	const char* GetProcAddress(const char* name)
 	{
 		return static_cast<const char*>(Application::GetInstance().GetWindow()->GetNativeWindow()->GetProcAddress(name));

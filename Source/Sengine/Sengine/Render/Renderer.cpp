@@ -1,6 +1,7 @@
 ﻿#include "Globals.h"
 #include "Renderer.h"
 
+#include "RenderViewport.h"
 #include "2D/Renderer2D.h"
 #include "3D/Renderer3D.h"
 #include "Context/IRenderContext.h"
@@ -11,9 +12,14 @@ namespace Sengine
 	{
 		m_RenderContext = IRenderContext::Create(contextType);
 
-		if (!m_RenderContext->Init()) return false;
+		if (!m_RenderContext->Init())
+		{
+			return false;
+		}
 
 		Renderer2D::Renderer2D::Init(m_RenderContext);
+
+		m_Viewport = {};
 
 		return true;
 	}
@@ -58,5 +64,13 @@ namespace Sengine
 	void Renderer::EndRenderer()
 	{
 
+	}
+	void Renderer::SetViewportSize(Vector2Int size)
+	{
+		m_Viewport.Size = size;
+	}
+	Render::RenderViewport Renderer::GetRenderViewport()
+	{
+		return m_Viewport;
 	}
 }

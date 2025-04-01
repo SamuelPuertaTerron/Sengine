@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Applicatiom/Input/InputManager.h"
 
 namespace Sengine
 {
@@ -16,6 +17,4 @@ namespace Sengine
 	private:
 		ActionMap m_ActionMap;
 	};
-}
-
-
+}//namespace Sengine

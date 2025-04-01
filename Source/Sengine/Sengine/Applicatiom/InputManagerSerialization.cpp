@@ -43,8 +43,6 @@ namespace Sengine
 
 			actionName = in["Action " + std::to_string(i)]["Name"].get<std::string>();
 			code = static_cast<EKeyCode>(in["Action " + std::to_string(i)]["Code"].get<int>());
-
-			InputManager::CreateActionMapping(m_ActionMap, actionName, code, nullptr);
 		}
 	}
-}
+}//namespace Sengine

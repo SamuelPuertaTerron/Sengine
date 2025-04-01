@@ -1,0 +1,28 @@
+31-03-2025 07:00:12 [INFO] [Engine] Created Window
+31-03-2025 07:00:12 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 07:00:18 [INFO] [Engine] Destroyed Window
+31-03-2025 07:17:15 [INFO] [Engine] Created Window
+31-03-2025 07:17:15 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 07:17:21 [INFO] [Engine] Destroyed Window
+31-03-2025 07:17:39 [INFO] [Engine] Created Window
+31-03-2025 07:18:25 [INFO] [Engine] Created Window
+31-03-2025 07:18:25 [FATAL] [Assert] 1 at file D:\Work\Code\C++\Game Engine\Sengine\Source\Sengine\Sengine\Render\Context\IRenderContext.cpp at line 19
+Message: The current Graphics API supported is OpenGL
+
+31-03-2025 07:19:06 [INFO] [Engine] Created Window
+31-03-2025 07:19:06 [FATAL] [Assert] 1 at file D:\Work\Code\C++\Game Engine\Sengine\Source\Sengine\Sengine\Render\Context\IRenderContext.cpp at line 19 Message: The current Graphics API supported is OpenGL
+
+31-03-2025 07:19:37 [INFO] [Engine] Created Window
+31-03-2025 07:19:37 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 07:19:39 [INFO] [Engine] Destroyed Window
+31-03-2025 07:24:25 [INFO] [Engine] Created Window
+31-03-2025 07:24:25 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 07:24:33 [INFO] [Engine] Destroyed Window
+31-03-2025 07:53:58 [INFO] [Engine] Created Window
+31-03-2025 07:53:58 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 08:15:17 [INFO] [Engine] Created Window
+31-03-2025 08:15:17 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 08:15:22 [INFO] [Engine] Destroyed Window
+31-03-2025 08:43:58 [INFO] [Engine] Created Window
+31-03-2025 08:43:58 [INFO] [Renderer] Created OpenGL Renderer
+31-03-2025 08:44:34 [INFO] [Engine] Destroyed Window
