@@ -14,58 +14,62 @@ Sengine is a small, readable engine for making 2D games. It pairs an ECS (EnTT) 
 ## Quick Start
 
 ```cpp
-#include "Sengine.h"
+#include "Globals.h"
+#include "Engine/Sengine.h"
 
-using namespace Sengine;
-
-class GameLayer : public ILayer
+namespace Game
 {
-public:
-    void OnCreate() override
-    {
-        Serialization::RegisterComponentSerializers();
-        PhysicsSettings::Gravity = 9.81f; // meters/s², +Y is down
+    using namespace Sengine;
 
-        // Every world gets these systems.
-        m_Worlds.SetSharedSetup([](World& world)
+    class GameLayer : public ILayer
+    {
+    public:
+        void OnCreate() override
         {
-            world.AddSystem<PhysicsSystem>();
-            world.AddSystem<RenderSystem>(Raylib::Camera2D{ .zoom = 1.0f });
-        });
+            Serialization::RegisterComponentSerializers();
+            PhysicsSettings::Gravity = 9.81f; // meters/s², +Y is down
 
-        m_Worlds.Register("Level1",
-            [] { return std::make_unique<World>(); },
-            "Resources/Worlds/Level1.json");
+            // Every world gets these systems.
+            m_Worlds.SetSharedSetup([](World& world)
+            {
+                world.AddSystem<PhysicsSystem>();
+                world.AddSystem<RenderSystem>(Raylib::Camera2D{ .zoom = 1.0f });
+            });
 
-        m_Worlds.Request("Level1");
-    }
+            m_Worlds.Register("Level1",
+                [] { return std::make_unique<World>(); },
+                "Resources/Worlds/Level1.json");
 
-    void OnTick(float deltaTime) override
-    {
-        Renderer2D::BeginFrame(Raylib::Color(30, 30, 40, 255));
-        m_Worlds.Tick(deltaTime);
-        Renderer2D::EndFrame();
-    }
+            m_Worlds.Request("Level1");
+        }
 
-private:
-    Assets::AssetManager m_Assets;
-    WorldManager m_Worlds{ m_Assets };
-};
+        void OnTick(float deltaTime) override
+        {
+            Renderer2D::BeginFrame(Raylib::Color(30, 30, 40, 255));
+            m_Worlds.Tick(deltaTime);
+            Renderer2D::EndFrame();
+        }
+
+    private:
+        Assets::AssetManager m_Assets;
+        WorldManager m_Worlds{ m_Assets };
+    };
+{
 
 int main()
 {
-    EngineSpecification spec;
+    Sengine::EngineSpecification spec;
     spec.Width  = 1280;
     spec.Height = 720;
     spec.Title  = "My Game";
     spec.Render.VirtualWidth  = 640;
     spec.Render.VirtualHeight = 360;
-    spec.Render.Scaling = ScaleMode::Integer;
+    spec.Render.Scaling = Sengine::ScaleMode::Integer;
 
-    std::vector<std::unique_ptr<ILayer>> layers;
-    layers.push_back(std::make_unique<GameLayer>());
+    std::vector<std::unique_ptr<Sengine::ILayer>> layers;
+    layers.push_back(std::make_unique<Game::GameLayer>());
 
-    Engine::CreateAndRun(spec, std::move(layers));
+    Sengine::Engine::CreateAndRun(spec, std::move(layers));
 }
 ```
 
