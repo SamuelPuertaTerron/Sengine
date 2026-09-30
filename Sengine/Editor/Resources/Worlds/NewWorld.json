@@ -1,0 +1,126 @@
+{
+    "entities": [
+        {
+            "components": {
+                "BoxCollider": {
+                    "Material": {
+                        "Density": 1.0,
+                        "Friction": 0.5,
+                        "Restitution": 0.5,
+                        "RestitutionThreshold": 0.5
+                    },
+                    "Offset": [
+                        0.0,
+                        0.0
+                    ],
+                    "Size": [
+                        0.0,
+                        0.0
+                    ],
+                    "Trigger": false
+                },
+                "Identification": {
+                    "ID": 7561120584555943042,
+                    "IsActive": true,
+                    "Name": "Ground"
+                },
+                "Texture": {
+                    "Layer": 1,
+                    "Size": [
+                        0.0,
+                        0.0
+                    ],
+                    "Source": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Texture": "Square.png",
+                    "Tint": [
+                        197,
+                        0,
+                        0,
+                        255
+                    ]
+                },
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        200.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        50.0,
+                        3.0
+                    ]
+                }
+            }
+        },
+        {
+            "components": {
+                "BoxCollider": {
+                    "Material": {
+                        "Density": 0.10000000149011612,
+                        "Friction": 0.5,
+                        "Restitution": 0.5,
+                        "RestitutionThreshold": 0.5
+                    },
+                    "Offset": [
+                        0.0,
+                        0.0
+                    ],
+                    "Size": [
+                        0.0,
+                        0.0
+                    ],
+                    "Trigger": false
+                },
+                "Identification": {
+                    "ID": 6994110013310948358,
+                    "IsActive": true,
+                    "Name": "Falling"
+                },
+                "Rigidbody": {
+                    "AngularDamping": 0.0,
+                    "CanRotate": true,
+                    "LinearDamping": 0.0,
+                    "Type": "Dynamic",
+                    "UseGravity": true
+                },
+                "Texture": {
+                    "Layer": 1,
+                    "Size": [
+                        0.0,
+                        0.0
+                    ],
+                    "Source": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Texture": "Rock.png",
+                    "Tint": [
+                        255,
+                        255,
+                        255,
+                        120
+                    ]
+                },
+                "Transform": {
+                    "Position": [
+                        50.0,
+                        -200.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.5,
+                        1.5
+                    ]
+                }
+            }
+        }
+    ],
+    "version": 1
+}
