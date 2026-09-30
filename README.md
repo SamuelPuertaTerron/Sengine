@@ -1,5 +1,9 @@
-# Fallen  
-*A fantasy 2D game written in C++20 using [Raylib](https://www.raylib.com/).*  
+# Sengine  
+*A 2D game engine written in C++20 using [Raylib](https://www.raylib.com/).*  
+
+## Features
+
+- Easy to use API for game creation. 
 
 ## Build  
 
@@ -11,7 +15,7 @@ The project uses **Premake 5** as the build system and currently supports **Visu
 
 ## Third-Party Libraries  
 
-Fallen relies on the following libraries:  
+Sengine relies on the following libraries:  
 
 - [Raylib](https://www.raylib.com/) – window creation & rendering  
 - [EnTT](https://github.com/skypjack/entt) – entity-component system  
