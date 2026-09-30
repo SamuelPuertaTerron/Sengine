@@ -13,6 +13,8 @@ Sengine is a small, readable engine for making 2D games. It pairs an ECS (EnTT) 
 
 ## Quick Start
 
+This example below creates a world and Draws a ```Hello from Sengine``` text at the centre of the screen. 
+
 ```cpp
 #include "Globals.h"
 #include "Engine/Sengine.h"
