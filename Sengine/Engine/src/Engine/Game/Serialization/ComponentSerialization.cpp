@@ -22,6 +22,8 @@ namespace Sengine
 		//the configuration is saved. Add them here if you want save games to keep momentum.
 		NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RigidbodyComponent, Type, UseGravity, CanRotate, LinearDamping, AngularDamping)
 
+		NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TextComponent, Text, FontColour, FontSize)
+
 		static void SaveTexture(const TextureComponent& c, nlohmann::json& j, const SerializationContext& ctx)
 	{
 		j["Source"] = c.Source;
@@ -86,6 +88,7 @@ namespace Sengine
 			ComponentSerializers::Register<TransformComponent>("Transform");
 			ComponentSerializers::Register<RigidbodyComponent>("Rigidbody");
 			ComponentSerializers::Register<BoxColliderComponent>("BoxCollider");
+			ComponentSerializers::Register<TextComponent>("Text");
 			ComponentSerializers::Register<TextureComponent>("Texture", &SaveTexture, &LoadTexture);
 		}
 	}//namespace Serialization

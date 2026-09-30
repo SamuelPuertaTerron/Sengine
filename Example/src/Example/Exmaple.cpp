@@ -5,45 +5,138 @@ namespace Example
 {
 	namespace
 	{
-		constexpr float kSquareTextureSize = 32.0f;
-		constexpr float kSideScaleX = 10.0f;
-		constexpr float kSideAngle = 45.0f;
-		constexpr float kCentreGap = 20.0f; 
-		constexpr float kSideY = 120.0f;
+		//----- World -----
+
+		constexpr float kGravity = 9.8f;
+		constexpr Raylib::Color kClearColour{ 30, 30, 46, 255 };
+
+		//----- Rock -----
+
+		constexpr Raylib::Vector2 kRockSpawn{ 50.0f, -200.0f };
+		constexpr Raylib::Vector2 kRockScale{ 1.5f, 1.5f };
+		constexpr Raylib::Color kRockTint{ 255, 255, 255, 120 };
+		constexpr float kRockDensity = 0.1f;
+
+		//----- Ground and ramps -----
+
+		constexpr Raylib::Color kBlockColour{ 197, 0, 0, 255 };
+		constexpr float kSquareTextureSize = 32.0f;				
+
+		constexpr Raylib::Vector2 kGroundPosition{ 0.0f, 200.0f };
+		constexpr Raylib::Vector2 kGroundScale{ 50.0f, 3.0f };
+
+		constexpr float kRampScaleX = 10.0f;
+		constexpr float kRampAngle = 45.0f;
+		constexpr float kRampY = 120.0f;
+		constexpr float kRampGap = 20.0f;						
 		constexpr float kCos45 = 0.70710678f;
-	}
+
+		//----- HUD -----
+
+		constexpr Raylib::Vector2 kHudOrigin{ 2.0f, 2.0f };
+		constexpr float kHudWidth = 300.0f;
+		constexpr float kHudPadding = 6.0f;
+		constexpr float kRowGap = 8.0f;
+		constexpr float kLabelHeight = 20.0f;						
+		constexpr float kButtonHeight = 30.0f;						
+		constexpr Raylib::Color kHudBackground{ 49, 50, 68, 220 };
+
+		//----- Helpers -----
+
+		Raylib::Camera2D MakeCamera()
+		{
+			const Raylib::Vector2 virtualSize = Renderer2D::GetVirtualSize();
+
+			Raylib::Camera2D camera{};
+			camera.offset = { virtualSize.x * 0.5f, virtualSize.y * 0.5f };	
+			camera.zoom = 1.0f;
+			return camera;
+		}
+
+		std::string BounceLabel(int bounces)
+		{
+			return std::format("Bounces: {}", bounces);
+		}
+
+		//A solid, textured, static box with a collider.
+		Entity CreateBlock(World& world, const std::string& name, std::shared_ptr<Texture> texture,
+			Raylib::Vector2 position, Raylib::Vector2 scale, float rotation = 0.0f)
+		{
+			Entity block = world.CreateEntity(name);
+
+			auto& transform = block.AddComponent<TransformComponent>();
+			transform.Position = position;
+			transform.Scale = scale;
+			transform.Rotation = rotation;
+
+			auto& sprite = block.AddComponent<TextureComponent>();
+			sprite.Texture = std::move(texture);
+			sprite.Tint = kBlockColour;
+			sprite.Layer = 1;
+
+			block.AddComponent<BoxColliderComponent>();
+			return block;
+		}
+
+		Entity CreatePanel(World& world, const std::string& name, Raylib::Rectangle bounds, Raylib::Color background)
+		{
+			Entity panel = world.CreateEntity(name);
+			panel.AddComponent<TransformComponent>().Position = { bounds.x, bounds.y };
+
+			auto& component = panel.AddComponent<PanelComponent>();
+			component.Size = { bounds.width, bounds.height };
+			component.BackgroundColour = background;
+			return panel;
+		}
+
+		Entity CreateLabel(World& world, const std::string& name, Raylib::Vector2 position, const std::string& text)
+		{
+			Entity label = world.CreateEntity(name);
+			label.AddComponent<TransformComponent>().Position = position;
+			label.AddComponent<TextComponent>().Text = text;
+			return label;
+		}
+
+		Entity CreateButton(World& world, const std::string& name, Raylib::Vector2 position,
+			const std::string& text, std::function<void()> onClicked)
+		{
+			Entity button = world.CreateEntity(name);
+			button.AddComponent<TransformComponent>().Position = position;
+
+			auto& component = button.AddComponent<ButtonComponent>();
+			component.Text = text;
+			component.ButtonClicked = std::move(onClicked);
+			return button;
+		}
+	}//namespace
 
 	void Example::OnCreate()
 	{
-		PhysicsSettings::Gravity = 9.8f;
+		PhysicsSettings::Gravity = kGravity;
+		GUIStyleSettings::LoadDarkTheme();
 
-		Raylib::Camera2D camera{};
-		const Raylib::Vector2 virtualSize = Renderer2D::GetVirtualSize();
-		camera.offset = Raylib::Vector2(virtualSize.x * 0.5f, virtualSize.y * 0.5f);
-		camera.zoom = 1.0f;
-
-		CreateFallingObject();
-		CreateGroundObject();
+		CreateRock();
+		CreateGround();
+		CreateHud();
 
 		m_World.AddSystem<PhysicsSystem>();
-		m_World.AddSystem<RenderSystem>(camera);
-
+		m_World.AddSystem<RenderSystem>(MakeCamera());
+		m_World.AddSystem<UISystem>();		//After RenderSystem so the HUD draws on top.
 		m_World.OnCreate();
 
-		Time::Pause();
+		Time::Pause();						//Starts on Space or the Play button.
 	}
 
 	void Example::OnTick(float deltaTime)
 	{
-		if(Input::IsKeyDown(Input::EKeyCode::Space))
+		if (Input::IsKeyPressed(Input::EKeyCode::Space))
 		{
 			Time::Resume();
 		}
 
-		Renderer2D::BeginFrame(Raylib::Color(30, 30, 46, 255));
-			m_World.OnTick(deltaTime);
-			Renderer2D::Present();
-		Renderer2D::EndFrame();
+		Renderer2D::BeginFrame(kClearColour);
+		m_World.OnTick(deltaTime);
+		Renderer2D::EndFrame();	
 	}
 
 	void Example::OnDestroy()
@@ -51,71 +144,78 @@ namespace Example
 		m_World.OnDestroy();
 	}
 
-	void Example::CreateFallingObject()
+	void Example::CreateRock()
 	{
-		auto fall = m_World.CreateEntity("Falling");
+		Entity rock = m_World.CreateEntity("Rock");
 
-		auto& fallTransform = fall.AddComponent<TransformComponent>();
-		fallTransform.Position = { 50.0f, -200.0f };
-		fallTransform.Scale = { 1.5f, 1.5f };
+		auto& transform = rock.AddComponent<TransformComponent>();
+		transform.Position = kRockSpawn;
+		transform.Scale = kRockScale;
 
-		auto& fallSprite = fall.AddComponent<TextureComponent>();
-		fallSprite.Texture = m_Assets.GetTexture("Rock.png");
-		fallSprite.Tint = Raylib::Color(255, 255, 255, 120);
-		fallSprite.Layer = 1;
+		auto& sprite = rock.AddComponent<TextureComponent>();
+		sprite.Texture = m_Assets.GetTexture("Rock.png");
+		sprite.Tint = kRockTint;
+		sprite.Layer = 1;
 
-		auto& fallCollider = fall.AddComponent<BoxColliderComponent>();
-		fallCollider.Trigger = false;
-		fallCollider.Material.Density = 0.1f;
+		rock.AddComponent<BoxColliderComponent>().Material.Density = kRockDensity;
+		rock.AddComponent<RigidbodyComponent>().Type = RigidbodyType::DynamicBody;
 
-		auto& fallRigidbody = fall.AddComponent<RigidbodyComponent>();
-		fallRigidbody.Type = RigidbodyType::DynamicBody;
-		fallRigidbody.UseGravity = true;
+		rock.AddComponent<CollisionCallbacksComponent>().OnCollisionEnter =
+			[this](Entity self, Entity other) { OnRockCollision(self, other); };
 	}
 
-	void Example::CreateGroundObject()
+	void Example::CreateGround()
 	{
-		const Raylib::Color objectColour = Raylib::Color(197, 0, 0, 255);
+		const std::shared_ptr<Texture> square = m_Assets.GetTexture("Square.png");
 
-		auto ground = m_World.CreateEntity("Ground");
+		CreateBlock(m_World, "Ground", square, kGroundPosition, kGroundScale);
 
-		auto& groundTransform = ground.AddComponent<TransformComponent>();
-		groundTransform.Position = { 0.0f, 200.0f };
-		groundTransform.Scale = { 50.0f, 3.0f };
+		//Two ramps angled into a V, their lower ends kRampGap apart.
+		const float rampHalfLength = kSquareTextureSize * kRampScaleX * 0.5f;
+		const float rampX = rampHalfLength * kCos45 + kRampGap * 0.5f;
+		const Raylib::Vector2 rampScale{ kRampScaleX, 1.0f };
 
-		auto& groundSprite = ground.AddComponent<TextureComponent>();
-		groundSprite.Texture = m_Assets.GetTexture("Square.png");
-		groundSprite.Tint = objectColour;
-		groundSprite.Layer = 1;
+		Entity left = CreateBlock(m_World, "LeftRamp", square, { -rampX, kRampY }, rampScale, kRampAngle);
+		Entity right = CreateBlock(m_World, "RightRamp", square, { rampX, kRampY }, rampScale, 180.0f - kRampAngle);
 
-		auto& groundCollider = ground.AddComponent<BoxColliderComponent>();
-		groundCollider.Trigger = false;
+		//Fully bouncy ramps.
+		left.GetComponent<BoxColliderComponent>().Material.Restitution = 1.0f;
+		right.GetComponent<BoxColliderComponent>().Material.Restitution = 1.0f;
+	}
 
-		const float sideHalfLength = kSquareTextureSize * kSideScaleX * 0.5f;
-		const float sideHalfSpanX = sideHalfLength * kCos45;
+	void Example::CreateHud()
+	{
+		//Rows are laid out top to bottom, then the panel is sized to fit them.
+		const float x = kHudOrigin.x + kHudPadding;
+		float y = kHudOrigin.y + kHudPadding;
 
-		const float sideX = sideHalfSpanX + kCentreGap * 0.5f;
+		CreateLabel(m_World, "TitleText", { x, y }, "Hello from Sengine");
+		y += kLabelHeight + kRowGap;
 
-		auto createSide = [&](const char* name, float x, float rotation)
-			{
-				auto side = m_World.CreateEntity(name);
+		m_BounceText = CreateLabel(m_World, "BounceText", { x, y }, BounceLabel(m_Bounces));
+		y += kLabelHeight + kRowGap;
 
-				auto& transform = side.AddComponent<TransformComponent>();
-				transform.Position = { x, kSideY };
-				transform.Rotation = rotation;
-				transform.Scale = { kSideScaleX, 1.0f };
+		CreateButton(m_World, "PlayButton", { x, y }, "Play", []() { Time::Resume(); });
+		y += kButtonHeight + kRowGap;
 
-				auto& sprite = side.AddComponent<TextureComponent>();
-				sprite.Texture = m_Assets.GetTexture("Square.png");
-				sprite.Tint = objectColour;
-				sprite.Layer = 1;
+		CreateButton(m_World, "QuitButton", { x, y }, "Quit Game!", []() { Engine::Quit(); });
+		const float bottom = y + kButtonHeight + kHudPadding;
 
-				auto& collider = side.AddComponent<BoxColliderComponent>();
-				collider.Trigger = false;
-				collider.Material.Restitution = 1.0f;
-			};
+		CreatePanel(m_World, "HudPanel",
+			{ kHudOrigin.x, kHudOrigin.y, kHudWidth, bottom - kHudOrigin.y }, kHudBackground);
+	}
 
-		createSide("LSide", -sideX, kSideAngle);           
-		createSide("RSide", sideX, 180.0f - kSideAngle);
+	void Example::OnRockCollision(Entity self, Entity other)
+	{
+		++m_Bounces;
+
+		//Only rewrite the label when the count actually changes.
+		if (m_BounceText)
+		{
+			m_BounceText.GetComponent<TextComponent>().Text = BounceLabel(m_Bounces);
+		}
+
+		Logging::Log(Logging::ELogType::Info, std::format("Rock hit {}",
+			other.GetComponent<IdentificationComponent>().Name));
 	}
 }//namespace Example
