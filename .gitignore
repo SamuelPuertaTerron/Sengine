@@ -33,6 +33,7 @@
 # Directories
 **bin/
 **bin-int/
+**.vscode/
 
 # Files
 *.user
