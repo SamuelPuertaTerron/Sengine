@@ -32,7 +32,7 @@ int main()
 		#include <Windows.h>
 		int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 		{
-			return Exampl::Main();
+			return Example::Main();
 		}
 	#else //FE_PLATFORM_WINDOWS
 		//Anything But Windows will use the default int main()

@@ -80,6 +80,60 @@ namespace Sengine
 		}
 	}
 
+	static void SaveAudio(const AudioComponent& c, nlohmann::json& j, const SerializationContext& ctx)
+	{
+		j["Volume"] = c.Volume;
+		j["Pitch"] = c.Pitch;
+		j["PlayOnCreate"] = c.PlayOnCreate;
+
+		if (!c.Clip)
+		{
+			return;
+		}
+
+		if (ctx.AssetManager)
+		{
+			if (std::optional<fs::path> path = ctx.AssetManager->GetAudioClipPath(*c.Clip))
+			{
+				j["Clip"] = path->generic_string();
+				return;
+			}
+		}
+
+		Logging::Log(Logging::ELogType::Warning,
+			"AudioComponent: clip was not loaded through the AssetManager and won't be saved");
+	}
+
+	static void LoadAudio(AudioComponent& c, const nlohmann::json& j, const SerializationContext& ctx)
+	{
+		const AudioComponent defaults{};
+		c.Volume = j.value("Volume", defaults.Volume);
+		c.Pitch = j.value("Pitch", defaults.Pitch);
+		c.PlayOnCreate = j.value("PlayOnCreate", defaults.PlayOnCreate);
+
+		const std::string path = j.value("Clip", std::string{});
+		if (path.empty())
+		{
+			return;
+		}
+
+		if (!ctx.AssetManager)
+		{
+			Logging::Log(Logging::ELogType::Error,
+				"AudioComponent: no AssetManager in context, can't load '" + path + "'");
+			return;
+		}
+
+		try
+		{
+			c.Clip = ctx.AssetManager->GetAudioClip(path);
+		}
+		catch (const std::exception& e)
+		{
+			Logging::Log(Logging::ELogType::Error, std::format("AudioComponent: {}", e.what()));
+		}
+	}
+
 	namespace Serialization
 	{
 		void RegisterComponentSerializers()
@@ -90,6 +144,7 @@ namespace Sengine
 			ComponentSerializers::Register<BoxColliderComponent>("BoxCollider");
 			ComponentSerializers::Register<TextComponent>("Text");
 			ComponentSerializers::Register<TextureComponent>("Texture", &SaveTexture, &LoadTexture);
+			ComponentSerializers::Register<AudioComponent>("Audio", &SaveAudio, &LoadAudio);
 		}
 	}//namespace Serialization
 }//namespace Sengine

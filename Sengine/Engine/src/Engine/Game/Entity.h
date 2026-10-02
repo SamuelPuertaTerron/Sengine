@@ -13,13 +13,19 @@ namespace Sengine
 		}
 
 		template<typename TComponent, typename... TArgs>
-		TComponent& AddComponent(TArgs&&... args)
+		decltype(auto) AddComponent(TArgs&&... args)
 		{
 			return m_Registry->emplace<TComponent>(m_Handle, std::forward<TArgs>(args)...);
 		}
 
+		template<typename TComponent, typename... TArgs>
+		decltype(auto) AddOrReplaceComponent(TArgs&&... args)
+		{
+			return m_Registry->emplace_or_replace<TComponent>(m_Handle, std::forward<TArgs>(args)...);
+		}
+
 		template<typename TComponent>
-		TComponent& GetComponent()
+		decltype(auto) GetComponent()
 		{
 			return m_Registry->get<TComponent>(m_Handle);
 		}

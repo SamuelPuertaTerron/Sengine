@@ -36,21 +36,12 @@ project "Engine"
         "sol2"
     }
 
-    linkoptions { "/IGNORE:4006" } -- For winmm library
-
     filter "system:windows"
         systemversion "latest"
         defines 
         {
             "FE_PLATFORM_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS"
-        }
-
-        links 
-        {
-            "opengl32",
-            "gdi32",
-            "winmm"
         }
 
     filter "system:linux"

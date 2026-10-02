@@ -30,9 +30,8 @@ project "Example Project"
 	links
 	{
         "Engine",
+		"raylib",
 	}
-
-    linkoptions { "/IGNORE:4006" } -- For winmm library
 
 	filter "system:windows"
 		systemversion "latest"
@@ -41,6 +40,12 @@ project "Example Project"
 		{
 			"FE_PLATFORM_WINDOWS",
 			"_CRT_SECURE_NO_WARNINGS"
+		}
+
+		links
+		{
+			"opengl32",
+			"gdi32",
 		}
 
 		postbuildcommands 

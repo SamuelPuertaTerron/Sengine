@@ -1,24 +1,32 @@
-﻿  rcore.c
+﻿  raudio.c
+  raygui.c
+  rcore.c
+  rglfw.c
   rmodels.c
   rshapes.c
   rtext.c
   rtextures.c
-D:\Work\Code\C++\Games\Fallen\ThirdParty\raylib\src\external\win32_clipboard.h(54,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition
-  (compiling source file 'src/rcore.c')
-      D:\Work\Code\C++\Games\Fallen\ThirdParty\raylib\src\external\win32_clipboard.h(54,9):
+  utils.c
+D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\raudio.c(117,9): warning C4005: 'NOMINMAX': macro redefinition
+      D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\raudio.c(117,9):
+      'NOMINMAX' previously declared on the command line
+  
+D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\external\win32_clipboard.h(54,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition
+  (compiling source file '../raylib/src/rcore.c')
+      D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\external\win32_clipboard.h(54,9):
       'WIN32_LEAN_AND_MEAN' previously declared on the command line
   
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(60,9): warning C4005: 'MAX_PATH': macro redefinition
-  (compiling source file 'src/rcore.c')
-      D:\Work\Code\C++\Games\Fallen\ThirdParty\raylib\src\rcore.c(166,17):
+  (compiling source file '../raylib/src/rcore.c')
+      D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\rcore.c(166,17):
       see previous definition of 'MAX_PATH'
   
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,9): warning C4005: 'APIENTRY': macro redefinition
-  (compiling source file 'src/rcore.c')
-      D:\Work\Code\C++\Games\Fallen\ThirdParty\raylib\src\external\glfw\include\GLFW\glfw3.h(123,11):
+  (compiling source file '../raylib/src/rcore.c')
+      D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\src\external\glfw\include\GLFW\glfw3.h(123,11):
       see previous definition of 'APIENTRY'
   
 gdi32.lib(GDI32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in winmm.lib(WINMM.dll); second definition ignored
 opengl32.lib(OPENGL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in winmm.lib(WINMM.dll); second definition ignored
 raudio.obj : warning LNK4006: PlaySound already defined in winmm.lib(WINMM.dll); second definition ignored
-  raylib.vcxproj -> D:\Work\Code\C++\Games\Fallen\ThirdParty\raylib\bin\Release\raylib.lib
+  raylib.vcxproj -> D:\Work\Code\C++\Game Engine\Sengine\ThirdParty\raylib\bin\Release\raylib.lib
