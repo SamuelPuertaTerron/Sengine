@@ -10,7 +10,10 @@ namespace Example
 		void OnDestroy() override;
 
 	private:
-		//Scene setup, called once from OnCreate.
+		//Builds entities and systems. Used at startup and on every reset.
+		void BuildWorld();
+		void ResetWorld();
+
 		void CreateRock();
 		void CreateGround();
 		void CreateHud();
@@ -23,5 +26,8 @@ namespace Example
 
 		Entity m_BounceText;
 		int m_Bounces = 0;
+
+		//Set by the Reset button, handled at the start of the next tick.
+		bool m_bResetRequested = false;
 	};
 }//namespace Example

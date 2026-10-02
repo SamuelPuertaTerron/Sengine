@@ -112,8 +112,39 @@ namespace Example
 
 	void Example::OnCreate()
 	{
+		//One-time global setup, not repeated on reset.
 		PhysicsSettings::Gravity = kGravity;
 		GUIStyleSettings::LoadDarkTheme();
+
+		BuildWorld();
+	}
+
+	void Example::OnTick(float deltaTime)
+	{
+		if (m_bResetRequested || Input::IsKeyPressed(Input::EKeyCode::R))
+		{
+			m_bResetRequested = false;
+			ResetWorld();
+		}
+
+		if (Input::IsKeyPressed(Input::EKeyCode::Space))
+		{
+			Time::Resume();
+		}
+
+		Renderer2D::BeginFrame(kClearColour);
+		m_World.OnTick(deltaTime);
+		Renderer2D::EndFrame();
+	}
+
+	void Example::OnDestroy()
+	{
+		m_World.OnDestroy();
+	}
+
+	void Example::BuildWorld()
+	{
+		m_Bounces = 0;
 
 		CreateRock();
 		CreateGround();
@@ -125,24 +156,17 @@ namespace Example
 		m_World.AddSystem<UISystem>();		//After RenderSystem so the HUD draws on top.
 		m_World.OnCreate();
 
-		Time::Pause();						//Starts on Space or the Play button.
+		Time::Pause();						
 	}
 
-	void Example::OnTick(float deltaTime)
-	{
-		if (Input::IsKeyPressed(Input::EKeyCode::Space))
-		{
-			Time::Resume();
-		}
-
-		Renderer2D::BeginFrame(kClearColour);
-		m_World.OnTick(deltaTime);
-		Renderer2D::EndFrame();	
-	}
-
-	void Example::OnDestroy()
+	void Example::ResetWorld()
 	{
 		m_World.OnDestroy();
+		m_BounceText = {};
+
+		BuildWorld();
+
+		Logging::Log(Logging::ELogType::Info, "World reset");
 	}
 
 	void Example::CreateRock()
@@ -175,7 +199,6 @@ namespace Example
 
 		CreateBlock(m_World, "Ground", square, kGroundPosition, kGroundScale);
 
-		//Two ramps angled into a V, their lower ends kRampGap apart.
 		const float rampHalfLength = kSquareTextureSize * kRampScaleX * 0.5f;
 		const float rampX = rampHalfLength * kCos45 + kRampGap * 0.5f;
 		const Raylib::Vector2 rampScale{ kRampScaleX, 1.0f };
@@ -201,6 +224,9 @@ namespace Example
 		y += kLabelHeight + kRowGap;
 
 		CreateButton(m_World, "PlayButton", { x, y }, "Play", []() { Time::Resume(); });
+		y += kButtonHeight + kRowGap;
+
+		CreateButton(m_World, "ResetButton", { x, y }, "Reset", [this]() { m_bResetRequested = true; });
 		y += kButtonHeight + kRowGap;
 
 		CreateButton(m_World, "QuitButton", { x, y }, "Quit Game!", []() { Engine::Quit(); });
