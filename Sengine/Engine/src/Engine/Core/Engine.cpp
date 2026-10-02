@@ -14,6 +14,8 @@ namespace Sengine::Engine
 		void Create(const EngineSpecification& specification)
 		{
 			m_Context.Window = std::make_unique<Window>(specification);
+			Raylib::InitAudioDevice();
+
 			Time::Init();
 			Renderer2D::Init(specification.Render);
 
@@ -42,6 +44,8 @@ namespace Sengine::Engine
 				layer->OnDestroy();
 			}
 
+			m_Layers.clear();
+			Raylib::CloseAudioDevice();
 			Renderer2D::Destroy();
 		}
 

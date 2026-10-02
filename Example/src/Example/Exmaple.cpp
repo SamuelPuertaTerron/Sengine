@@ -121,6 +121,7 @@ namespace Example
 
 		m_World.AddSystem<PhysicsSystem>();
 		m_World.AddSystem<RenderSystem>(MakeCamera());
+		m_World.AddSystem<AudioSystem>();
 		m_World.AddSystem<UISystem>();		//After RenderSystem so the HUD draws on top.
 		m_World.OnCreate();
 
@@ -157,11 +158,15 @@ namespace Example
 		sprite.Tint = kRockTint;
 		sprite.Layer = 1;
 
+		rock.AddComponent<AudioComponent>(m_Assets.GetAudioClip("RockImpact.wav"));
 		rock.AddComponent<BoxColliderComponent>().Material.Density = kRockDensity;
 		rock.AddComponent<RigidbodyComponent>().Type = RigidbodyType::DynamicBody;
-
+#
 		rock.AddComponent<CollisionCallbacksComponent>().OnCollisionEnter =
-			[this](Entity self, Entity other) { OnRockCollision(self, other); };
+			[this](Entity self, Entity other) 
+			{
+				OnRockCollision(self, other); 
+			};
 	}
 
 	void Example::CreateGround()
@@ -213,6 +218,11 @@ namespace Example
 		if (m_BounceText)
 		{
 			m_BounceText.GetComponent<TextComponent>().Text = BounceLabel(m_Bounces);
+		}
+
+		if (!self.HasComponent<PlaySoundRequestComponent>())
+		{
+			self.AddComponent<PlaySoundRequestComponent>();
 		}
 
 		Logging::Log(Logging::ELogType::Info, std::format("Rock hit {}",

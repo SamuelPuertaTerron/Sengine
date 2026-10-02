@@ -23,4 +23,24 @@ namespace Sengine::Assets
 	{
 		return m_RootPath / "Textures";
 	}
+
+	std::shared_ptr<AudioClip> AssetManager::GetAudioClip(const fs::path& path)
+	{
+		return m_AudioClips.Get((GetAudioRoot() / path).lexically_normal());
+	}
+
+	std::optional<fs::path> AssetManager::GetAudioClipPath(const AudioClip& clip) const
+	{
+		std::optional<fs::path> fullPath = m_AudioClips.FindPath(clip);
+		if (!fullPath)
+		{
+			return std::nullopt;
+		}
+		return fullPath->lexically_relative(GetAudioRoot().lexically_normal());
+	}
+
+	fs::path AssetManager::GetAudioRoot() const
+	{
+		return m_RootPath / "Audio";
+	}
 }//namespace Sengine::Assets

@@ -12,4 +12,14 @@ namespace Sengine::Assets
 	{
 		return texture.IsValid();
 	}
+
+	std::shared_ptr<AudioClip> AudioTraits::Load(const fs::path& path)
+	{
+		return std::make_shared<AudioClip>(path);
+	}
+
+	bool AudioTraits::IsValid(const AudioClip& audio)
+	{
+		return audio.IsValid();
+	}
 }//namespace Sengine::Assets
