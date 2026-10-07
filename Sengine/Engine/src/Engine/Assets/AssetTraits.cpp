@@ -22,4 +22,14 @@ namespace Sengine::Assets
 	{
 		return audio.IsValid();
 	}
+
+	std::shared_ptr<Scripting::Script> LuaTraits::Load(const fs::path& path)
+	{
+		return std::make_shared<Scripting::Script>(path);
+	}
+
+	bool LuaTraits::IsValid(const Scripting::Script& script)
+	{
+		return script.IsValid();
+	}
 }//namespace Sengine::Assets

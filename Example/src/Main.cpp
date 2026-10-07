@@ -12,8 +12,8 @@ namespace Example
 		spec.Width = 1920;
 		spec.Height = 1080;
 		spec.Title = "Example";
-		spec.Render.VirtualWidth = 1920;
-		spec.Render.VirtualHeight = 1080;
+		spec.Render.VirtualWidth = 1270;
+		spec.Render.VirtualHeight = 720;
 		spec.Render.Scaling = ScaleMode::Integer;
 
 		Engine::CreateAndRun(spec, std::move(layers));

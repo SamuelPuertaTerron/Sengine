@@ -4,3 +4,4 @@
 #include "Engine/Game/Systems/PhysicsSystem.h"
 #include "Engine/Game/Systems/UISystem.h"
 #include "Engine/Game/Systems/AudioSystem.h"
+#include "Engine/Game/Systems/ScriptingSystem.h"

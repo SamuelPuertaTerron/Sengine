@@ -12,7 +12,7 @@ namespace Example
 
 		//----- Rock -----
 
-		constexpr Raylib::Vector2 kRockSpawn{ 50.0f, -200.0f };
+		constexpr Raylib::Vector2 kRockSpawn{ 90.0f, -250.0f };
 		constexpr Raylib::Vector2 kRockScale{ 1.5f, 1.5f };
 		constexpr Raylib::Color kRockTint{ 255, 255, 255, 120 };
 		constexpr float kRockDensity = 0.1f;
@@ -20,7 +20,7 @@ namespace Example
 		//----- Ground and ramps -----
 
 		constexpr Raylib::Color kBlockColour{ 197, 0, 0, 255 };
-		constexpr float kSquareTextureSize = 32.0f;				
+		constexpr float kSquareTextureSize = 32.0f;
 
 		constexpr Raylib::Vector2 kGroundPosition{ 0.0f, 200.0f };
 		constexpr Raylib::Vector2 kGroundScale{ 50.0f, 3.0f };
@@ -28,7 +28,7 @@ namespace Example
 		constexpr float kRampScaleX = 10.0f;
 		constexpr float kRampAngle = 45.0f;
 		constexpr float kRampY = 120.0f;
-		constexpr float kRampGap = 20.0f;						
+		constexpr float kRampGap = 50.0f;
 		constexpr float kCos45 = 0.70710678f;
 
 		//----- HUD -----
@@ -37,8 +37,8 @@ namespace Example
 		constexpr float kHudWidth = 300.0f;
 		constexpr float kHudPadding = 6.0f;
 		constexpr float kRowGap = 8.0f;
-		constexpr float kLabelHeight = 20.0f;						
-		constexpr float kButtonHeight = 30.0f;						
+		constexpr float kLabelHeight = 20.0f;
+		constexpr float kButtonHeight = 30.0f;
 		constexpr Raylib::Color kHudBackground{ 49, 50, 68, 220 };
 
 		//----- Helpers -----
@@ -48,14 +48,9 @@ namespace Example
 			const Raylib::Vector2 virtualSize = Renderer2D::GetVirtualSize();
 
 			Raylib::Camera2D camera{};
-			camera.offset = { virtualSize.x * 0.5f, virtualSize.y * 0.5f };	
+			camera.offset = { virtualSize.x * 0.5f, virtualSize.y * 0.5f };
 			camera.zoom = 1.0f;
 			return camera;
-		}
-
-		std::string BounceLabel(int bounces)
-		{
-			return std::format("Bounces: {}", bounces);
 		}
 
 		//A solid, textured, static box with a collider.
@@ -144,26 +139,25 @@ namespace Example
 
 	void Example::BuildWorld()
 	{
-		m_Bounces = 0;
-
 		CreateRock();
 		CreateGround();
 		CreateHud();
 
+		m_World.AddSystem<ScriptingSystem>();	//First, so Lua collision hooks are wired before physics steps.
 		m_World.AddSystem<PhysicsSystem>();
 		m_World.AddSystem<RenderSystem>(MakeCamera());
 		m_World.AddSystem<AudioSystem>();
 		m_World.AddSystem<UISystem>();		//After RenderSystem so the HUD draws on top.
 		m_World.OnCreate();
 
-		Time::Pause();						
+		Time::Pause();
 	}
 
 	void Example::ResetWorld()
 	{
+		//Destroying the world also destroys the ScriptingSystem and its Lua state,
+		//so Rock.lua starts again from zero bounces.
 		m_World.OnDestroy();
-		m_BounceText = {};
-
 		BuildWorld();
 
 		Logging::Log(Logging::ELogType::Info, "World reset");
@@ -171,6 +165,7 @@ namespace Example
 
 	void Example::CreateRock()
 	{
+		//The rock's data lives here; what it does (bounce count, sound, logging) lives in Rock.lua.
 		Entity rock = m_World.CreateEntity("Rock");
 
 		auto& transform = rock.AddComponent<TransformComponent>();
@@ -185,12 +180,8 @@ namespace Example
 		rock.AddComponent<AudioComponent>(m_Assets.GetAudioClip("RockImpact.wav"));
 		rock.AddComponent<BoxColliderComponent>().Material.Density = kRockDensity;
 		rock.AddComponent<RigidbodyComponent>().Type = RigidbodyType::DynamicBody;
-#
-		rock.AddComponent<CollisionCallbacksComponent>().OnCollisionEnter =
-			[this](Entity self, Entity other) 
-			{
-				OnRockCollision(self, other); 
-			};
+
+		rock.AddComponent<ScriptComponent>(m_Assets.GetScript("Rock.lua"));
 	}
 
 	void Example::CreateGround()
@@ -220,7 +211,8 @@ namespace Example
 		CreateLabel(m_World, "TitleText", { x, y }, "Hello from Sengine");
 		y += kLabelHeight + kRowGap;
 
-		m_BounceText = CreateLabel(m_World, "BounceText", { x, y }, BounceLabel(m_Bounces));
+		//Rock.lua finds this by name and updates it.
+		CreateLabel(m_World, "BounceText", { x, y }, "Bounces: 0");
 		y += kLabelHeight + kRowGap;
 
 		CreateButton(m_World, "PlayButton", { x, y }, "Play", []() { Time::Resume(); });
@@ -234,24 +226,5 @@ namespace Example
 
 		CreatePanel(m_World, "HudPanel",
 			{ kHudOrigin.x, kHudOrigin.y, kHudWidth, bottom - kHudOrigin.y }, kHudBackground);
-	}
-
-	void Example::OnRockCollision(Entity self, Entity other)
-	{
-		++m_Bounces;
-
-		//Only rewrite the label when the count actually changes.
-		if (m_BounceText)
-		{
-			m_BounceText.GetComponent<TextComponent>().Text = BounceLabel(m_Bounces);
-		}
-
-		if (!self.HasComponent<PlaySoundRequestComponent>())
-		{
-			self.AddComponent<PlaySoundRequestComponent>();
-		}
-
-		Logging::Log(Logging::ELogType::Info, std::format("Rock hit {}",
-			other.GetComponent<IdentificationComponent>().Name));
 	}
 }//namespace Example

@@ -43,4 +43,24 @@ namespace Sengine::Assets
 	{
 		return m_RootPath / "Audio";
 	}
+
+	std::shared_ptr<Scripting::Script> AssetManager::GetScript(const fs::path& path)
+	{
+		return m_LuaScripts.Get((GetScriptsRoot() / path).lexically_normal());
+	}
+
+	std::optional<fs::path> AssetManager::GetScriptPath(const Scripting::Script& script) const
+	{
+		std::optional<fs::path> fullPath = m_LuaScripts.FindPath(script);
+		if (!fullPath)
+		{
+			return std::nullopt;
+		}
+		return fullPath->lexically_relative(GetScriptsRoot().lexically_normal());
+	}
+
+	fs::path AssetManager::GetScriptsRoot() const
+	{
+		return m_RootPath / "Scripts";
+	}
 }//namespace Sengine::Assets

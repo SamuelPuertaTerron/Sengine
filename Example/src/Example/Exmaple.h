@@ -18,16 +18,10 @@ namespace Example
 		void CreateGround();
 		void CreateHud();
 
-		void OnRockCollision(Entity self, Entity other);
-
 	private:
 		World m_World;
 		Assets::AssetManager m_Assets;
 
-		Entity m_BounceText;
-		int m_Bounces = 0;
-
-		//Set by the Reset button, handled at the start of the next tick.
 		bool m_bResetRequested = false;
 	};
 }//namespace Example

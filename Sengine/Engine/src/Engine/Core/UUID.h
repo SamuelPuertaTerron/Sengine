@@ -25,5 +25,4 @@ namespace Sengine
 	private:
 		uint64_t m_Value{ 0 };
 	};
-
 }//namespace Sengine::Random
