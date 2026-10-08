@@ -36,6 +36,10 @@ project "Engine"
         "sol2"
     }
 
+    filter "files:src/Engine/Platform/**.cpp"
+        flags { "NoPCH" }
+    filter {}
+
     filter "system:windows"
         systemversion "latest"
         defines 

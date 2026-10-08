@@ -1,3 +1,5 @@
+include "NewProject.lua"
+
 workspace("Sengine")
     configurations {"Debug", "Release"}
     architecture("x64")
@@ -24,6 +26,7 @@ workspace("Sengine")
     group "Sengine"
         include(sengine_dir .. "Editor")
         include(sengine_dir .. "Engine")
+        include(sengine_dir .. "ProjectLoader")
     group ""
 
     include "Example"

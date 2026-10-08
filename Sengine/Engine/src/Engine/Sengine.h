@@ -1,5 +1,8 @@
 #pragma once
 
+//Platform
+#include "Engine/Platform/PlatformUtils.h"
+
 //Core
 #include "Engine/Core/Time.h"
 #include "Engine/Core/Engine.h"
