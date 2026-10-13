@@ -14,9 +14,17 @@ namespace Sengine::ImGuiLoader
 
 		Raylib::ImGui::rlImGuiSetup(true);
 
-		if(docking)
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDrawCursor = false;
+
+#ifdef FE_RELEASE
+		//Leave the OS cursor alone; the game decides when it's shown or hidden.
+		io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+		Raylib::ShowCursor();
+#endif
+
+		if (docking)
 		{
-			ImGuiIO& io = ImGui::GetIO();
 			io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		}
 	}
