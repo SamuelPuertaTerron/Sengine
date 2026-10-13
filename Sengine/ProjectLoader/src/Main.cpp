@@ -9,11 +9,11 @@ namespace ProjectLoader
 		layers.push_back(std::make_unique<ProjectLoader>());
 
 		EngineSpecification spec;
-		spec.Width = 1024;
-		spec.Height = 768;
+		spec.Width = 1270;
+		spec.Height = 720;
 		spec.Title = "Editor";
-		spec.Render.VirtualWidth = 1024;
-		spec.Render.VirtualHeight = 768;
+		spec.Render.VirtualWidth = 1270;
+		spec.Render.VirtualHeight = 720;
 		spec.Render.Scaling = ScaleMode::Integer;
 
 		Engine::CreateAndRun(spec, std::move(layers));

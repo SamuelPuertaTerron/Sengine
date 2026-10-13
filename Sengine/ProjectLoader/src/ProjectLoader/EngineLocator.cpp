@@ -1,22 +1,31 @@
 #include "ProjectLoaderGlobals.h"
-#include "ProjectLoader/EngineLocator.h"
+#include "EngineLocator.h"
+
+#include "Engine/Platform/Environment.h"
+#include "Engine/Platform/PlatformUtils.h"
 
 namespace ProjectLoader
 {
-	namespace
+	bool IsEngineRoot(const fs::path& dir)
 	{
-		bool IsEngineRoot(const fs::path& dir)
-		{
-			return fs::exists(dir / "Sengine.lua") && fs::is_directory(dir / "Sengine" / "Templates");
-		}
-	}//namespace
+		std::error_code error;
+		return !dir.empty()
+			&& fs::exists(dir / "Sengine.lua", error)
+			&& fs::is_directory(dir / "Sengine" / "Templates", error);
+	}
 
-	fs::path FindEngineRoot()
+	fs::path FindInstalledEngine()
 	{
-		//Manual override, handy if the exe is ever installed somewhere else.
-		if (const char* env = std::getenv("SENGINE_ROOT"); env && IsEngineRoot(env))
-			return env;
+		//Read the saved value rather than this process's copy: it may have changed after the hub started.
+		const std::optional<std::string> value = Platform::GetPersistentEnvironmentVariable(kEngineVariable);
+		if (!value || !IsEngineRoot(*value))
+			return {};
 
+		return fs::path(*value).lexically_normal();
+	}
+
+	fs::path FindLocalEngine()
+	{
 		for (fs::path dir = Platform::GetExecutablePath().parent_path(); !dir.empty(); dir = dir.parent_path())
 		{
 			if (IsEngineRoot(dir)) return dir;

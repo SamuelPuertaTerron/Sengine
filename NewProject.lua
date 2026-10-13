@@ -1,5 +1,5 @@
 newoption { trigger = "name",     value = "NAME", description = "Name of the new game project" }
-newoption { trigger = "location", value = "PATH", description = "Create a standalone project repo in this folder" }
+newoption { trigger = "location", value = "PATH", description = "Create a standalone project in this folder" }
 
 local ENGINE_ROOT = path.getdirectory(_SCRIPT)
 local TEMPLATES   = ENGINE_ROOT .. "/Sengine/Templates"
@@ -12,10 +12,6 @@ local function run(command, optional)
 	local ok = os.execute(shellCommand)
 	if not ok and not optional then error("Command failed: " .. command) end
 	return ok
-end
-
-local function trim(text)
-	return ((text or ""):gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
 local function copyTemplate(src, dst, name)
@@ -53,7 +49,7 @@ newaction {
 
 		local location = _OPTIONS["location"]
 
-		-- In-engine project (for engine development)
+		-- In-engine project under Games/ (for engine development)
 		if not location then
 			local dst = ENGINE_ROOT .. "/Games/" .. name
 			if os.isdir(dst) then error(dst .. " already exists") end
@@ -62,30 +58,23 @@ newaction {
 			return
 		end
 
-		-- Standalone project repo with the engine as a submodule
+		-- Standalone project. It contains no engine: it builds against the shared install in SENGINE_ROOT.
 		local root = path.join(path.getabsolute(location), name)
 		if os.isdir(root) then error(root .. " already exists") end
+		if not os.mkdir(root) then error("Could not create " .. root) end
 
-		local url = trim(os.outputof('git -C "' .. ENGINE_ROOT .. '" remote get-url origin'))
-		if url == "" then error("Could not read the engine's git remote. Is git installed?") end
-		local commit = trim(os.outputof('git -C "' .. ENGINE_ROOT .. '" rev-parse HEAD'))
-
-		os.mkdir(root)
-		run('git -C "' .. root .. '" init')
-		run('git -C "' .. root .. '" submodule add ' .. url .. ' Sengine')
-
-		-- Pin the submodule to the same engine version as this clone (only works if it's pushed).
-		if commit ~= "" and not run('git -C "' .. root .. '/Sengine" checkout --quiet ' .. commit, true) then
-			print("Warning: engine commit " .. commit .. " isn't on the remote yet; using the latest instead.")
-		end
-		run('git -C "' .. root .. '" submodule update --init --recursive')
-
-		--copyTemplate(TEMPLATES .. "/Workspace", root, name)
+		copyTemplate(TEMPLATES .. "/Workspace", root, name)
 		copyTemplate(TEMPLATES .. "/Game", root .. "/" .. name, name)
 		io.writefile(root .. "/.gitignore", "bin/\nbin-int/\n.vs/\n*.sln\n*.vcxproj*\nMakefile\n*.make\n")
 
+		-- A git repo for the game is handy but not required.
+		if not run('git -C "' .. root .. '" init --quiet', true) then
+			print("Warning: git not found, skipped 'git init'.")
+		end
+
+		-- Pass --engine explicitly: SENGINE_ROOT may not be in this process's environment yet.
 		local generator = os.ishost("windows") and "vs2022" or "gmake2"
-		run('"' .. _PREMAKE_COMMAND .. '" --file="' .. root .. '/premake5.lua" ' .. generator)
+		run('"' .. _PREMAKE_COMMAND .. '" --file="' .. root .. '/premake5.lua" --engine="' .. ENGINE_ROOT .. '" ' .. generator)
 
 		print("Created " .. root)
 	end
