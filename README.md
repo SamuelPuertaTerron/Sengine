@@ -7,10 +7,6 @@
 
 Sengine is a small, readable engine for making 2D games. It pairs an ECS (EnTT) with Box2D physics, a pixel-perfect renderer, and JSON world serialization.
 
-## Features
-
-- **Virtual resolution canvas.** Write your game at a fixed resolution (e.g. 640×360) and let the engine scale it to any window size.
-
 ## Building
 
 The project uses **Premake 5** and currently supports **Windows / Visual Studio 2022** only.
