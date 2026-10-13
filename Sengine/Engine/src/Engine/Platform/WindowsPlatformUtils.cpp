@@ -4,6 +4,10 @@
 #define NOMINMAX
 #include <Windows.h>
 
+#include <ShlObj.h>
+#pragma comment(lib, "Shell32.lib")
+#pragma comment(lib, "Ole32.lib")
+
 namespace Sengine::Platform
 {
 	ProcessResult RunProcess(const std::string& commandLine, const std::filesystem::path& workingDirectory)
@@ -60,6 +64,29 @@ namespace Sengine::Platform
 		CloseHandle(process.hProcess);
 		CloseHandle(process.hThread);
 		CloseHandle(readPipe);
+		return result;
+	}
+
+	std::filesystem::path GetExecutablePath()
+	{
+		std::wstring buffer(MAX_PATH, L'\0');
+		while (true)
+		{
+			const DWORD length = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
+			if (length == 0) return {};
+			if (length < buffer.size()) { buffer.resize(length); return buffer; }
+			buffer.resize(buffer.size() * 2); //Path longer than MAX_PATH: grow and retry.
+		}
+	}
+
+	std::filesystem::path GetDocumentsPath()
+	{
+		//Handles Documents being redirected (e.g. to OneDrive), unlike %USERPROFILE%/Documents.
+		PWSTR raw = nullptr;
+		std::filesystem::path result;
+		if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Documents, 0, nullptr, &raw)))
+			result = raw;
+		CoTaskMemFree(raw);
 		return result;
 	}
 }//namespace Sengine::Platform

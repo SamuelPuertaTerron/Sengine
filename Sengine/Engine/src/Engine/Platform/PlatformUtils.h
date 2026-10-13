@@ -12,4 +12,7 @@ namespace Sengine::Platform
 	};
 
 	ProcessResult RunProcess(const std::string& commandLine, const std::filesystem::path& workingDirectory = {});
+
+	std::filesystem::path GetExecutablePath();
+	std::filesystem::path GetDocumentsPath();
 }//namespace Sengine::Platform
